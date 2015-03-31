@@ -1,0 +1,10 @@
+################################
+# Dune module information file #
+################################
+
+#Name of the module
+Module: dune-channeling
+Version: 0.2.4
+Maintainer: valiska@fz-juelich.de
+#depending on
+Depends: dune-common dune-geometry dune-grid
