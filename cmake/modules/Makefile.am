@@ -1,4 +1,4 @@
-MODULES = DuneChannelingMacros.cmake
+MODULES = DuneImmoMacros.cmake
 modulesdir = $(datadir)/dune/cmake/modules
 dist_modules_DATA = ${MODULES}
 

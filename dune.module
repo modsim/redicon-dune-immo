@@ -3,7 +3,7 @@
 ################################
 
 #Name of the module
-Module: dune-channeling
+Module: dune-immo
 Version: 0.2.4
 Maintainer: valiska@fz-juelich.de
 #depending on

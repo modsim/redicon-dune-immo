@@ -61,9 +61,9 @@ AC_CONFIG_FILES([
   doc/doxygen/Makefile
   doc/doxygen/Doxyfile
   dune/Makefile
-  dune/channeling/Makefile
+  dune/immo/Makefile
   m4/Makefile
-  dune-channeling.pc
+  dune-immo.pc
 ])
 AC_OUTPUT
 # finally print the summary information

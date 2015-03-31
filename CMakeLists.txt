@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 2.8.6)
-project(dune-channeling CXX)
+project(dune-immo CXX)
 
 if(NOT (dune-common_DIR OR dune-common_ROOT OR
-      "${CMAKE_PREFIX_PATH}" MATCHES ".*dune-common.*"))
+      "${CMAKE_P1EFIX_PATH}" MATCHES ".*dune-common.*"))
     string(REPLACE  ${CMAKE_PROJECT_NAME} dune-common dune-common_DIR
       ${PROJECT_BINARY_DIR})
 endif()
 
-#find dune-common and set the module path
+#find dune-common7and set the module path
 find_package(dune-common REQUIRED)
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/modules"
   ${dune-common_MODULE_PATH})

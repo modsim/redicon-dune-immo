@@ -133,8 +133,8 @@ DIST_COMMON = $(top_srcdir)/am/top-rules $(top_srcdir)/am/global-rules \
 	$(top_srcdir)/am/cmake-pkg-config $(srcdir)/Makefile.in \
 	$(srcdir)/Makefile.am $(top_srcdir)/configure \
 	$(am__configure_deps) $(srcdir)/config.h.in \
-	$(srcdir)/dune-channeling.pc.in README config.guess config.sub \
-	depcomp install-sh missing ltmain.sh
+	$(srcdir)/dune-immo.pc.in README config.guess config.sub \
+	install-sh missing ltmain.sh
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/dependencies.m4 \
@@ -145,7 +145,7 @@ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = config.h
-CONFIG_CLEAN_FILES = dune-channeling.pc
+CONFIG_CLEAN_FILES = dune-immo.pc
 CONFIG_CLEAN_VPATH_FILES =
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -358,10 +358,6 @@ DUNEMPICPPFLAGS = @DUNEMPICPPFLAGS@
 DUNEMPILDFLAGS = @DUNEMPILDFLAGS@
 DUNEMPILIBS = @DUNEMPILIBS@
 DUNEWEBDIR = @DUNEWEBDIR@
-DUNE_CHANNELING_VERSION = @DUNE_CHANNELING_VERSION@
-DUNE_CHANNELING_VERSION_MAJOR = @DUNE_CHANNELING_VERSION_MAJOR@
-DUNE_CHANNELING_VERSION_MINOR = @DUNE_CHANNELING_VERSION_MINOR@
-DUNE_CHANNELING_VERSION_REVISION = @DUNE_CHANNELING_VERSION_REVISION@
 DUNE_COMMON_CPPFLAGS = @DUNE_COMMON_CPPFLAGS@
 DUNE_COMMON_LDFLAGS = @DUNE_COMMON_LDFLAGS@
 DUNE_COMMON_LIBDIR = @DUNE_COMMON_LIBDIR@
@@ -390,6 +386,10 @@ DUNE_GRID_VERSION = @DUNE_GRID_VERSION@
 DUNE_GRID_VERSION_MAJOR = @DUNE_GRID_VERSION_MAJOR@
 DUNE_GRID_VERSION_MINOR = @DUNE_GRID_VERSION_MINOR@
 DUNE_GRID_VERSION_REVISION = @DUNE_GRID_VERSION_REVISION@
+DUNE_IMMO_VERSION = @DUNE_IMMO_VERSION@
+DUNE_IMMO_VERSION_MAJOR = @DUNE_IMMO_VERSION_MAJOR@
+DUNE_IMMO_VERSION_MINOR = @DUNE_IMMO_VERSION_MINOR@
+DUNE_IMMO_VERSION_REVISION = @DUNE_IMMO_VERSION_REVISION@
 DUNE_LDFLAGS = @DUNE_LDFLAGS@
 DUNE_LIBS = @DUNE_LIBS@
 DUNE_MAINTAINER_NAME = @DUNE_MAINTAINER_NAME@
@@ -441,6 +441,7 @@ LIBTOOL = @LIBTOOL@
 LIPO = @LIPO@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
+LT_SYS_LIBRARY_PATH = @LT_SYS_LIBRARY_PATH@
 MAKEINFO = @MAKEINFO@
 MANIFEST_TOOL = @MANIFEST_TOOL@
 MKDIR_P = @MKDIR_P@
@@ -639,7 +640,7 @@ $(srcdir)/config.h.in:  $(am__configure_deps)
 
 distclean-hdr:
 	-rm -f config.h stamp-h1
-dune-channeling.pc: $(top_builddir)/config.status $(srcdir)/dune-channeling.pc.in
+dune-immo.pc: $(top_builddir)/config.status $(srcdir)/dune-immo.pc.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 
 mostlyclean-libtool:

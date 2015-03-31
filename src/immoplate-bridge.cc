@@ -547,10 +547,11 @@ int main(int argc, char** argv)
 		//for (typename std::vector<PSMatrix*>::iterator ps = smlist.begin(); ps != smlist.end(); ++ps)
 		//	delete *ps;
 
+		delete stream;
+
 #else
 		std::cerr << "No 3D Alberta grid" << std::endl;
 #endif
-		delete stream;
 		return 0;
 	}
 

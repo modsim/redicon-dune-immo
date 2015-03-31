@@ -4,18 +4,6 @@
    */
 #undef DUNE_ALBERTA_VERSION
 
-/* Define to the version of dune-channeling */
-#undef DUNE_CHANNELING_VERSION
-
-/* Define to the major version of dune-channeling */
-#undef DUNE_CHANNELING_VERSION_MAJOR
-
-/* Define to the minor version of dune-channeling */
-#undef DUNE_CHANNELING_VERSION_MINOR
-
-/* Define to the revision of dune-channeling */
-#undef DUNE_CHANNELING_VERSION_REVISION
-
 /* Define to the version of dune-common */
 #undef DUNE_COMMON_VERSION
 
@@ -55,6 +43,18 @@
 
 /* Define to the revision of dune-grid */
 #undef DUNE_GRID_VERSION_REVISION
+
+/* Define to the version of dune-immo */
+#undef DUNE_IMMO_VERSION
+
+/* Define to the major version of dune-immo */
+#undef DUNE_IMMO_VERSION_MAJOR
+
+/* Define to the minor version of dune-immo */
+#undef DUNE_IMMO_VERSION_MINOR
+
+/* Define to the revision of dune-immo */
+#undef DUNE_IMMO_VERSION_REVISION
 
 /* Standard debug streams with a level below will collapse to doing nothing */
 #undef DUNE_MINIMAL_DEBUG_LEVEL

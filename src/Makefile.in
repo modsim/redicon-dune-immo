@@ -373,10 +373,6 @@ DUNEMPICPPFLAGS = @DUNEMPICPPFLAGS@
 DUNEMPILDFLAGS = @DUNEMPILDFLAGS@
 DUNEMPILIBS = @DUNEMPILIBS@
 DUNEWEBDIR = @DUNEWEBDIR@
-DUNE_CHANNELING_VERSION = @DUNE_CHANNELING_VERSION@
-DUNE_CHANNELING_VERSION_MAJOR = @DUNE_CHANNELING_VERSION_MAJOR@
-DUNE_CHANNELING_VERSION_MINOR = @DUNE_CHANNELING_VERSION_MINOR@
-DUNE_CHANNELING_VERSION_REVISION = @DUNE_CHANNELING_VERSION_REVISION@
 DUNE_COMMON_CPPFLAGS = @DUNE_COMMON_CPPFLAGS@
 DUNE_COMMON_LDFLAGS = @DUNE_COMMON_LDFLAGS@
 DUNE_COMMON_LIBDIR = @DUNE_COMMON_LIBDIR@
@@ -405,6 +401,10 @@ DUNE_GRID_VERSION = @DUNE_GRID_VERSION@
 DUNE_GRID_VERSION_MAJOR = @DUNE_GRID_VERSION_MAJOR@
 DUNE_GRID_VERSION_MINOR = @DUNE_GRID_VERSION_MINOR@
 DUNE_GRID_VERSION_REVISION = @DUNE_GRID_VERSION_REVISION@
+DUNE_IMMO_VERSION = @DUNE_IMMO_VERSION@
+DUNE_IMMO_VERSION_MAJOR = @DUNE_IMMO_VERSION_MAJOR@
+DUNE_IMMO_VERSION_MINOR = @DUNE_IMMO_VERSION_MINOR@
+DUNE_IMMO_VERSION_REVISION = @DUNE_IMMO_VERSION_REVISION@
 DUNE_LDFLAGS = @DUNE_LDFLAGS@
 DUNE_LIBS = @DUNE_LIBS@
 DUNE_MAINTAINER_NAME = @DUNE_MAINTAINER_NAME@
@@ -456,6 +456,7 @@ LIBTOOL = @LIBTOOL@
 LIPO = @LIPO@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
+LT_SYS_LIBRARY_PATH = @LT_SYS_LIBRARY_PATH@
 MAKEINFO = @MAKEINFO@
 MANIFEST_TOOL = @MANIFEST_TOOL@
 MKDIR_P = @MKDIR_P@
@@ -565,11 +566,15 @@ top_srcdir = @top_srcdir@
 SUBDIRS = tests
 EXTRA_DIST = CMakeLists.txt
 immoplate_SOURCES = immoplate.cc boundary-robin.hh boundary-dirichelt.hh\
-		lib/assembleMatrix.hh lib/assembleVector.hh \
-		lib/saveField.hh lib/saveField2.hh\
+		lib/assembleMatrix.hh lib/updateMatrix.hh lib/assembleVector.hh \
+		lib/saveField.hh lib/saveField2.hh lib/index.hh\
 		lib/laplacian.hh lib/gamma.hh lib/sourceFunctions.hh\
-		lib/integrateField.hh lib/evalField.hh lib/calcSurfArea.hh\
-		lib/setDirichlet.hh lib/setRobin.hh
+		lib/integrateField.hh lib/integrate_n.hh lib/integrateEntity.hh \
+		lib/evalField.hh lib/calcSurfArea.hh\
+		lib/setDirichlet.hh lib/setRobin.hh \
+		lib/integrateEntityDynamic.hh \
+		lib/pointSource.hh lib/diracDelta.hh lib/insideEntity.hh \
+		lib/entityFunction.hh lib/entityFunction2.hh lib/shapeFunctions.hh 
 
 immoplate_CPPFLAGS = $(AM_CPPFLAGS) \
 	$(DUNEMPICPPFLAGS) \
@@ -604,11 +609,15 @@ immoplate_LDFLAGS = $(AM_LDFLAGS) \
 immoplate_bridge_SOURCES = immoplate-bridge.cc bridge-forces.hh \
 		 bridge.hh bridge-entityFunction.hh bridge-robinBC.hh \
 		 boundary-robin.hh boundary-dirichelt.hh\
-		lib/assembleMatrix.hh lib/assembleVector.hh \
-		lib/saveField.hh lib/saveField2.hh\
+		lib/assembleMatrix.hh lib/updateMatrix.hh lib/assembleVector.hh \
+		lib/saveField.hh lib/saveField2.hh lib/index.hh\
 		lib/laplacian.hh lib/gamma.hh lib/sourceFunctions.hh\
-		lib/integrateField.hh lib/evalField.hh lib/calcSurfArea.hh\
-		lib/setDirichlet.hh lib/setRobin.hh
+		lib/integrateField.hh lib/integrate_n.hh lib/integrateEntity.hh \
+		lib/evalField.hh lib/calcSurfArea.hh\
+		lib/setDirichlet.hh lib/setRobin.hh \
+		lib/integrateEntityDynamic.hh \
+		lib/pointSource.hh lib/diracDelta.hh lib/insideEntity.hh \
+		lib/entityFunction.hh lib/entityFunction2.hh lib/shapeFunctions.hh 
 
 immoplate_bridge_CPPFLAGS = $(AM_CPPFLAGS) \
 	$(DUNEMPICPPFLAGS) \

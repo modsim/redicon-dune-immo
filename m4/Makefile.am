@@ -1,4 +1,4 @@
-M4FILES = dune-channeling.m4
+M4FILES = dune-immo.m4
 
 aclocaldir = $(datadir)/dune/aclocal
 aclocal_DATA = $(M4FILES)

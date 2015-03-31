@@ -4,11 +4,15 @@ noinst_PROGRAMS = immoplate immoplate-bridge
 EXTRA_DIST = immo-run immo-analyze.sh
 
 immoplate_SOURCES = immoplate.cc boundary-robin.hh boundary-dirichelt.hh\
-		lib/assembleMatrix.hh lib/assembleVector.hh \
-		lib/saveField.hh lib/saveField2.hh\
+		lib/assembleMatrix.hh lib/updateMatrix.hh lib/assembleVector.hh \
+		lib/saveField.hh lib/saveField2.hh lib/index.hh\
 		lib/laplacian.hh lib/gamma.hh lib/sourceFunctions.hh\
-		lib/integrateField.hh lib/evalField.hh lib/calcSurfArea.hh\
-		lib/setDirichlet.hh lib/setRobin.hh
+		lib/integrateField.hh lib/integrate_n.hh lib/integrateEntity.hh \
+		lib/evalField.hh lib/calcSurfArea.hh\
+		lib/setDirichlet.hh lib/setRobin.hh \
+		lib/integrateEntityDynamic.hh \
+		lib/pointSource.hh lib/diracDelta.hh lib/insideEntity.hh \
+		lib/entityFunction.hh lib/entityFunction2.hh lib/shapeFunctions.hh 
 
 immoplate_CPPFLAGS = $(AM_CPPFLAGS) \
 	$(DUNEMPICPPFLAGS) \
@@ -41,11 +45,15 @@ immoplate_LDFLAGS = $(AM_LDFLAGS) \
 immoplate_bridge_SOURCES = immoplate-bridge.cc bridge-forces.hh \
 		 bridge.hh bridge-entityFunction.hh bridge-robinBC.hh \
 		 boundary-robin.hh boundary-dirichelt.hh\
-		lib/assembleMatrix.hh lib/assembleVector.hh \
-		lib/saveField.hh lib/saveField2.hh\
+		lib/assembleMatrix.hh lib/updateMatrix.hh lib/assembleVector.hh \
+		lib/saveField.hh lib/saveField2.hh lib/index.hh\
 		lib/laplacian.hh lib/gamma.hh lib/sourceFunctions.hh\
-		lib/integrateField.hh lib/evalField.hh lib/calcSurfArea.hh\
-		lib/setDirichlet.hh lib/setRobin.hh
+		lib/integrateField.hh lib/integrate_n.hh lib/integrateEntity.hh \
+		lib/evalField.hh lib/calcSurfArea.hh\
+		lib/setDirichlet.hh lib/setRobin.hh \
+		lib/integrateEntityDynamic.hh \
+		lib/pointSource.hh lib/diracDelta.hh lib/insideEntity.hh \
+		lib/entityFunction.hh lib/entityFunction2.hh lib/shapeFunctions.hh 
 
 immoplate_bridge_CPPFLAGS = $(AM_CPPFLAGS) \
 	$(DUNEMPICPPFLAGS) \

@@ -127,8 +127,8 @@ DIST_COMMON = $(top_srcdir)/am/global-rules \
 	$(top_srcdir)/am/sourcescheck $(top_srcdir)/am/headercheck \
 	$(top_srcdir)/am/checklog $(top_srcdir)/am/documentation \
 	$(srcdir)/Makefile.in $(srcdir)/Makefile.am \
-	$(channelinginclude_HEADERS)
-subdir = dune/channeling
+	$(immoinclude_HEADERS)
+subdir = dune/immo
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/dependencies.m4 \
 	$(top_srcdir)/configure.ac
@@ -184,8 +184,8 @@ am__uninstall_files_from_dir = { \
     || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
-am__installdirs = "$(DESTDIR)$(channelingincludedir)"
-HEADERS = $(channelinginclude_HEADERS)
+am__installdirs = "$(DESTDIR)$(immoincludedir)"
+HEADERS = $(immoinclude_HEADERS)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 # Read a list of newline-separated strings from the standard input,
 # and print each of them once, without duplicates.  Input order is
@@ -289,10 +289,6 @@ DUNEMPICPPFLAGS = @DUNEMPICPPFLAGS@
 DUNEMPILDFLAGS = @DUNEMPILDFLAGS@
 DUNEMPILIBS = @DUNEMPILIBS@
 DUNEWEBDIR = @DUNEWEBDIR@
-DUNE_CHANNELING_VERSION = @DUNE_CHANNELING_VERSION@
-DUNE_CHANNELING_VERSION_MAJOR = @DUNE_CHANNELING_VERSION_MAJOR@
-DUNE_CHANNELING_VERSION_MINOR = @DUNE_CHANNELING_VERSION_MINOR@
-DUNE_CHANNELING_VERSION_REVISION = @DUNE_CHANNELING_VERSION_REVISION@
 DUNE_COMMON_CPPFLAGS = @DUNE_COMMON_CPPFLAGS@
 DUNE_COMMON_LDFLAGS = @DUNE_COMMON_LDFLAGS@
 DUNE_COMMON_LIBDIR = @DUNE_COMMON_LIBDIR@
@@ -321,6 +317,10 @@ DUNE_GRID_VERSION = @DUNE_GRID_VERSION@
 DUNE_GRID_VERSION_MAJOR = @DUNE_GRID_VERSION_MAJOR@
 DUNE_GRID_VERSION_MINOR = @DUNE_GRID_VERSION_MINOR@
 DUNE_GRID_VERSION_REVISION = @DUNE_GRID_VERSION_REVISION@
+DUNE_IMMO_VERSION = @DUNE_IMMO_VERSION@
+DUNE_IMMO_VERSION_MAJOR = @DUNE_IMMO_VERSION_MAJOR@
+DUNE_IMMO_VERSION_MINOR = @DUNE_IMMO_VERSION_MINOR@
+DUNE_IMMO_VERSION_REVISION = @DUNE_IMMO_VERSION_REVISION@
 DUNE_LDFLAGS = @DUNE_LDFLAGS@
 DUNE_LIBS = @DUNE_LIBS@
 DUNE_MAINTAINER_NAME = @DUNE_MAINTAINER_NAME@
@@ -372,6 +372,7 @@ LIBTOOL = @LIBTOOL@
 LIPO = @LIPO@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
+LT_SYS_LIBRARY_PATH = @LT_SYS_LIBRARY_PATH@
 MAKEINFO = @MAKEINFO@
 MANIFEST_TOOL = @MANIFEST_TOOL@
 MKDIR_P = @MKDIR_P@
@@ -478,8 +479,8 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-channelingincludedir = $(includedir)/dune/channeling
-channelinginclude_HEADERS = channeling.hh
+immoincludedir = $(includedir)/dune/immo
+immoinclude_HEADERS = immo.hh
 EXTRA_DIST = CMakeLists.txt
 sourcescheck_IGNORE = aclocal.m4 dependencies.m4
 sourcescheck_LIST = $(SOURCES) $(DIST_SOURCES) $(HEADERS) $(DIST_HEADERS) \
@@ -508,9 +509,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(top_srcdir)/am/global-rules $(to
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign dune/channeling/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign dune/immo/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign dune/channeling/Makefile
+	  $(AUTOMAKE) --foreign dune/immo/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -536,27 +537,27 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
-install-channelingincludeHEADERS: $(channelinginclude_HEADERS)
+install-immoincludeHEADERS: $(immoinclude_HEADERS)
 	@$(NORMAL_INSTALL)
-	@list='$(channelinginclude_HEADERS)'; test -n "$(channelingincludedir)" || list=; \
+	@list='$(immoinclude_HEADERS)'; test -n "$(immoincludedir)" || list=; \
 	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(channelingincludedir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(channelingincludedir)" || exit 1; \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(immoincludedir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(immoincludedir)" || exit 1; \
 	fi; \
 	for p in $$list; do \
 	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
 	  echo "$$d$$p"; \
 	done | $(am__base_list) | \
 	while read files; do \
-	  echo " $(INSTALL_HEADER) $$files '$(DESTDIR)$(channelingincludedir)'"; \
-	  $(INSTALL_HEADER) $$files "$(DESTDIR)$(channelingincludedir)" || exit $$?; \
+	  echo " $(INSTALL_HEADER) $$files '$(DESTDIR)$(immoincludedir)'"; \
+	  $(INSTALL_HEADER) $$files "$(DESTDIR)$(immoincludedir)" || exit $$?; \
 	done
 
-uninstall-channelingincludeHEADERS:
+uninstall-immoincludeHEADERS:
 	@$(NORMAL_UNINSTALL)
-	@list='$(channelinginclude_HEADERS)'; test -n "$(channelingincludedir)" || list=; \
+	@list='$(immoinclude_HEADERS)'; test -n "$(immoincludedir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(channelingincludedir)'; $(am__uninstall_files_from_dir)
+	dir='$(DESTDIR)$(immoincludedir)'; $(am__uninstall_files_from_dir)
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
@@ -644,7 +645,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(HEADERS)
 installdirs:
-	for dir in "$(DESTDIR)$(channelingincludedir)"; do \
+	for dir in "$(DESTDIR)$(immoincludedir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -697,7 +698,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-channelingincludeHEADERS install-data-local
+install-data-am: install-data-local install-immoincludeHEADERS
 
 install-dvi: install-dvi-am
 
@@ -742,7 +743,7 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-channelingincludeHEADERS uninstall-local
+uninstall-am: uninstall-immoincludeHEADERS uninstall-local
 
 .MAKE: install-am install-strip
 
@@ -750,16 +751,16 @@ uninstall-am: uninstall-channelingincludeHEADERS uninstall-local
 	clean-libtool cscopelist-am ctags ctags-am distclean \
 	distclean-generic distclean-libtool distclean-tags distdir dvi \
 	dvi-am html html-am info info-am install install-am \
-	install-channelingincludeHEADERS install-data install-data-am \
-	install-data-local install-dvi install-dvi-am install-exec \
-	install-exec-am install-html install-html-am install-info \
+	install-data install-data-am install-data-local install-dvi \
+	install-dvi-am install-exec install-exec-am install-html \
+	install-html-am install-immoincludeHEADERS install-info \
 	install-info-am install-man install-pdf install-pdf-am \
 	install-ps install-ps-am install-strip installcheck \
 	installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic maintainer-clean-local mostlyclean \
 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
 	tags tags-am uninstall uninstall-am \
-	uninstall-channelingincludeHEADERS uninstall-local
+	uninstall-immoincludeHEADERS uninstall-local
 
 
 sourcescheck: sourcescheck-recursive

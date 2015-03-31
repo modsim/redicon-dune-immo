@@ -1,4 +1,4 @@
-SUBDIRS = channeling
+SUBDIRS = immo
 
 EXTRA_DIST = CMakeLists.txt
 

@@ -6,12 +6,12 @@ dnl -*- autoconf -*-
 # Additional checks needed to build dune-channeling
 # This macro should be invoked by every module which depends on dune-channeling, as
 # well as by dune-channeling itself
-AC_DEFUN([DUNE_CHANNELING_CHECKS])
+AC_DEFUN([DUNE_IMMO_CHECKS])
 
 # Additional checks needed to find dune-channeling
 # This macro should be invoked by every module which depends on dune-channeling, but
 # not by dune-channeling itself
-AC_DEFUN([DUNE_CHANNELING_CHECK_MODULE],
+AC_DEFUN([DUNE_IMMO_CHECK_MODULE],
 [
-  DUNE_CHECK_MODULES([dune-channeling],[channeling/channeling.hh])
+  DUNE_CHECK_MODULES([dune-immo],[immo/immo.hh])
 ])

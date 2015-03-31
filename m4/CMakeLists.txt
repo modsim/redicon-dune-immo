@@ -1,3 +1,3 @@
 
-install(PROGRAMS dune-channeling.m4 DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/dune/aclocal)
+install(PROGRAMS dune-immo.m4 DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/dune/aclocal)
 
