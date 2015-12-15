@@ -1,2 +1,12 @@
-I will add a README after it is quiet again in the office.
+This is DUNE-IMMO package for modelling two enzymes immobilized on a substrate.
+
+This code is a part of REDICON, REaction DIffusion systems via DIscrete-CONtinuous modelling (name proposed by Olav Zimmermann).
+
+The immobilized enzymes are modelled as two rectangular spots characterized by different sizes and rate constants. In addition, the enzymes can be bridged by a substrate-attracting rectangle. This program solves the diffusion equation for the substrate concentration with these boundary conditions at enzymes, and zero substrate, intermediate and product concentrations at 'infinity.' The resulting data file contains substrate, intermediate and product concentrations as functions of time.
+
+This program uses DUNE-GRID library and DUNE configure system. You need DUNE-GRID, DUNE-COMMON and DUNE-GEOMETRY and 'make ALBERTA_DIM=3' to compile it. Two separate programs 'immpoplate' and 'immpoplate-bridge' will be compiled. There are currently no --help option: Please check src/immpoplate.cc and src/immoplate-bridge.cc to change model parameters.
+
+To run the programs you need a mesh file which is currently not provided, however.
+
+This code is preliminary and part of it will be rewritten and published as a separate library.
 
