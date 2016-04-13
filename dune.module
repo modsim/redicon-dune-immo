@@ -4,7 +4,7 @@
 
 #Name of the module
 Module: dune-immo
-Version: 0.2.4
+Version: 0.3.0
 Maintainer: valiska@fz-juelich.de
 #depending on
 Depends: dune-common dune-geometry dune-grid

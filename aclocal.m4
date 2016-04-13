@@ -1,6 +1,6 @@
-# generated automatically by aclocal 1.13.4 -*- Autoconf -*-
+# generated automatically by aclocal 1.15 -*- Autoconf -*-
 
-# Copyright (C) 1996-2013 Free Software Foundation, Inc.
+# Copyright (C) 1996-2014 Free Software Foundation, Inc.
 
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -9277,7 +9277,7 @@ AS_VAR_COPY([$1], [pkg_cv_][$1])
 AS_VAR_IF([$1], [""], [$5], [$4])dnl
 ])# PKG_CHECK_VAR
 
-# Copyright (C) 2002-2013 Free Software Foundation, Inc.
+# Copyright (C) 2002-2014 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -9289,10 +9289,10 @@ AS_VAR_IF([$1], [""], [$5], [$4])dnl
 # generated from the m4 files accompanying Automake X.Y.
 # (This private macro should not be called outside this file.)
 AC_DEFUN([AM_AUTOMAKE_VERSION],
-[am__api_version='1.13'
+[am__api_version='1.15'
 dnl Some users find AM_AUTOMAKE_VERSION and mistake it for a way to
 dnl require some minimum version.  Point them to the right macro.
-m4_if([$1], [1.13.4], [],
+m4_if([$1], [1.15], [],
       [AC_FATAL([Do not call $0, use AM_INIT_AUTOMAKE([$1]).])])dnl
 ])
 
@@ -9308,14 +9308,14 @@ m4_define([_AM_AUTOCONF_VERSION], [])
 # Call AM_AUTOMAKE_VERSION and AM_AUTOMAKE_VERSION so they can be traced.
 # This function is AC_REQUIREd by AM_INIT_AUTOMAKE.
 AC_DEFUN([AM_SET_CURRENT_AUTOMAKE_VERSION],
-[AM_AUTOMAKE_VERSION([1.13.4])dnl
+[AM_AUTOMAKE_VERSION([1.15])dnl
 m4_ifndef([AC_AUTOCONF_VERSION],
   [m4_copy([m4_PACKAGE_VERSION], [AC_AUTOCONF_VERSION])])dnl
 _AM_AUTOCONF_VERSION(m4_defn([AC_AUTOCONF_VERSION]))])
 
 # AM_AUX_DIR_EXPAND                                         -*- Autoconf -*-
 
-# Copyright (C) 2001-2013 Free Software Foundation, Inc.
+# Copyright (C) 2001-2014 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -9360,15 +9360,14 @@ _AM_AUTOCONF_VERSION(m4_defn([AC_AUTOCONF_VERSION]))])
 # configured tree to be moved without reconfiguration.
 
 AC_DEFUN([AM_AUX_DIR_EXPAND],
-[dnl Rely on autoconf to set up CDPATH properly.
-AC_PREREQ([2.50])dnl
-# expand $ac_aux_dir to an absolute path
-am_aux_dir=`cd $ac_aux_dir && pwd`
+[AC_REQUIRE([AC_CONFIG_AUX_DIR_DEFAULT])dnl
+# Expand $ac_aux_dir to an absolute path.
+am_aux_dir=`cd "$ac_aux_dir" && pwd`
 ])
 
 # AM_CONDITIONAL                                            -*- Autoconf -*-
 
-# Copyright (C) 1997-2013 Free Software Foundation, Inc.
+# Copyright (C) 1997-2014 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -9399,7 +9398,7 @@ AC_CONFIG_COMMANDS_PRE(
 Usually this means the macro was only invoked conditionally.]])
 fi])])
 
-# Copyright (C) 1999-2013 Free Software Foundation, Inc.
+# Copyright (C) 1999-2014 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -9590,7 +9589,7 @@ _AM_SUBST_NOTMAKE([am__nodep])dnl
 
 # Generate code to set up dependency tracking.              -*- Autoconf -*-
 
-# Copyright (C) 1999-2013 Free Software Foundation, Inc.
+# Copyright (C) 1999-2014 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -9666,7 +9665,7 @@ AC_DEFUN([AM_OUTPUT_DEPENDENCY_COMMANDS],
 
 # Do all the work for Automake.                             -*- Autoconf -*-
 
-# Copyright (C) 1996-2013 Free Software Foundation, Inc.
+# Copyright (C) 1996-2014 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -9674,6 +9673,12 @@ AC_DEFUN([AM_OUTPUT_DEPENDENCY_COMMANDS],
 
 # This macro actually does too much.  Some checks are only needed if
 # your package does certain things.  But this isn't really a big deal.
+
+dnl Redefine AC_PROG_CC to automatically invoke _AM_PROG_CC_C_O.
+m4_define([AC_PROG_CC],
+m4_defn([AC_PROG_CC])
+[_AM_PROG_CC_C_O
+])
 
 # AM_INIT_AUTOMAKE(PACKAGE, VERSION, [NO-DEFINE])
 # AM_INIT_AUTOMAKE([OPTIONS])
@@ -9750,8 +9755,8 @@ AC_REQUIRE([AC_PROG_MKDIR_P])dnl
 # <http://lists.gnu.org/archive/html/automake/2012-07/msg00001.html>
 # <http://lists.gnu.org/archive/html/automake/2012-07/msg00014.html>
 AC_SUBST([mkdir_p], ['$(MKDIR_P)'])
-# We need awk for the "check" target.  The system "awk" is bad on
-# some platforms.
+# We need awk for the "check" target (and possibly the TAP driver).  The
+# system "awk" is bad on some platforms.
 AC_REQUIRE([AC_PROG_AWK])dnl
 AC_REQUIRE([AC_PROG_MAKE_SET])dnl
 AC_REQUIRE([AM_SET_LEADING_DOT])dnl
@@ -9783,6 +9788,51 @@ dnl macro is hooked onto _AC_COMPILER_EXEEXT early, see below.
 AC_CONFIG_COMMANDS_PRE(dnl
 [m4_provide_if([_AM_COMPILER_EXEEXT],
   [AM_CONDITIONAL([am__EXEEXT], [test -n "$EXEEXT"])])])dnl
+
+# POSIX will say in a future version that running "rm -f" with no argument
+# is OK; and we want to be able to make that assumption in our Makefile
+# recipes.  So use an aggressive probe to check that the usage we want is
+# actually supported "in the wild" to an acceptable degree.
+# See automake bug#10828.
+# To make any issue more visible, cause the running configure to be aborted
+# by default if the 'rm' program in use doesn't match our expectations; the
+# user can still override this though.
+if rm -f && rm -fr && rm -rf; then : OK; else
+  cat >&2 <<'END'
+Oops!
+
+Your 'rm' program seems unable to run without file operands specified
+on the command line, even when the '-f' option is present.  This is contrary
+to the behaviour of most rm programs out there, and not conforming with
+the upcoming POSIX standard: <http://austingroupbugs.net/view.php?id=542>
+
+Please tell bug-automake@gnu.org about your system, including the value
+of your $PATH and any error possibly output before this message.  This
+can help us improve future automake versions.
+
+END
+  if test x"$ACCEPT_INFERIOR_RM_PROGRAM" = x"yes"; then
+    echo 'Configuration will proceed anyway, since you have set the' >&2
+    echo 'ACCEPT_INFERIOR_RM_PROGRAM variable to "yes"' >&2
+    echo >&2
+  else
+    cat >&2 <<'END'
+Aborting the configuration process, to ensure you take notice of the issue.
+
+You can download and install GNU coreutils to get an 'rm' implementation
+that behaves properly: <http://www.gnu.org/software/coreutils/>.
+
+If you want to complete the configuration process using your problematic
+'rm' anyway, export the environment variable ACCEPT_INFERIOR_RM_PROGRAM
+to "yes", and re-run configure.
+
+END
+    AC_MSG_ERROR([Your 'rm' program is bad, sorry.])
+  fi
+fi
+dnl The trailing newline in this macro's definition is deliberate, for
+dnl backward compatibility and to allow trailing 'dnl'-style comments
+dnl after the AM_INIT_AUTOMAKE invocation. See automake bug#16841.
 ])
 
 dnl Hook into '_AC_COMPILER_EXEEXT' early to learn its expansion.  Do not
@@ -9790,7 +9840,6 @@ dnl add the conditional right here, as _AC_COMPILER_EXEEXT may be further
 dnl mangled by Autoconf and run in a shell conditional statement.
 m4_define([_AC_COMPILER_EXEEXT],
 m4_defn([_AC_COMPILER_EXEEXT])[m4_provide([_AM_COMPILER_EXEEXT])])
-
 
 # When config.status generates a header, we must update the stamp-h file.
 # This file resides in the same directory as the config header
@@ -9813,7 +9862,7 @@ for _am_header in $config_headers :; do
 done
 echo "timestamp for $_am_arg" >`AS_DIRNAME(["$_am_arg"])`/stamp-h[]$_am_stamp_count])
 
-# Copyright (C) 2001-2013 Free Software Foundation, Inc.
+# Copyright (C) 2001-2014 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -9824,7 +9873,7 @@ echo "timestamp for $_am_arg" >`AS_DIRNAME(["$_am_arg"])`/stamp-h[]$_am_stamp_co
 # Define $install_sh.
 AC_DEFUN([AM_PROG_INSTALL_SH],
 [AC_REQUIRE([AM_AUX_DIR_EXPAND])dnl
-if test x"${install_sh}" != xset; then
+if test x"${install_sh+set}" != xset; then
   case $am_aux_dir in
   *\ * | *\	*)
     install_sh="\${SHELL} '$am_aux_dir/install-sh'" ;;
@@ -9834,7 +9883,7 @@ if test x"${install_sh}" != xset; then
 fi
 AC_SUBST([install_sh])])
 
-# Copyright (C) 2003-2013 Free Software Foundation, Inc.
+# Copyright (C) 2003-2014 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -9855,7 +9904,7 @@ AC_SUBST([am__leading_dot])])
 
 # Check to see how 'make' treats includes.	            -*- Autoconf -*-
 
-# Copyright (C) 2001-2013 Free Software Foundation, Inc.
+# Copyright (C) 2001-2014 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -9905,7 +9954,7 @@ rm -f confinc confmf
 
 # Fake the existence of programs that GNU maintainers use.  -*- Autoconf -*-
 
-# Copyright (C) 1997-2013 Free Software Foundation, Inc.
+# Copyright (C) 1997-2014 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -9944,7 +9993,7 @@ fi
 
 # Helper functions for option handling.                     -*- Autoconf -*-
 
-# Copyright (C) 2001-2013 Free Software Foundation, Inc.
+# Copyright (C) 2001-2014 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -9973,7 +10022,54 @@ AC_DEFUN([_AM_SET_OPTIONS],
 AC_DEFUN([_AM_IF_OPTION],
 [m4_ifset(_AM_MANGLE_OPTION([$1]), [$2], [$3])])
 
-# Copyright (C) 2001-2013 Free Software Foundation, Inc.
+# Copyright (C) 1999-2014 Free Software Foundation, Inc.
+#
+# This file is free software; the Free Software Foundation
+# gives unlimited permission to copy and/or distribute it,
+# with or without modifications, as long as this notice is preserved.
+
+# _AM_PROG_CC_C_O
+# ---------------
+# Like AC_PROG_CC_C_O, but changed for automake.  We rewrite AC_PROG_CC
+# to automatically call this.
+AC_DEFUN([_AM_PROG_CC_C_O],
+[AC_REQUIRE([AM_AUX_DIR_EXPAND])dnl
+AC_REQUIRE_AUX_FILE([compile])dnl
+AC_LANG_PUSH([C])dnl
+AC_CACHE_CHECK(
+  [whether $CC understands -c and -o together],
+  [am_cv_prog_cc_c_o],
+  [AC_LANG_CONFTEST([AC_LANG_PROGRAM([])])
+  # Make sure it works both with $CC and with simple cc.
+  # Following AC_PROG_CC_C_O, we do the test twice because some
+  # compilers refuse to overwrite an existing .o file with -o,
+  # though they will create one.
+  am_cv_prog_cc_c_o=yes
+  for am_i in 1 2; do
+    if AM_RUN_LOG([$CC -c conftest.$ac_ext -o conftest2.$ac_objext]) \
+         && test -f conftest2.$ac_objext; then
+      : OK
+    else
+      am_cv_prog_cc_c_o=no
+      break
+    fi
+  done
+  rm -f core conftest*
+  unset am_i])
+if test "$am_cv_prog_cc_c_o" != yes; then
+   # Losing compiler, so override with the script.
+   # FIXME: It is wrong to rewrite CC.
+   # But if we don't then we get into trouble of one sort or another.
+   # A longer-term fix would be to have automake use am__CC in this case,
+   # and then we could set am__CC="\$(top_srcdir)/compile \$(CC)"
+   CC="$am_aux_dir/compile $CC"
+fi
+AC_LANG_POP([C])])
+
+# For backward compatibility.
+AC_DEFUN_ONCE([AM_PROG_CC_C_O], [AC_REQUIRE([AC_PROG_CC])])
+
+# Copyright (C) 2001-2014 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -9992,7 +10088,7 @@ AC_DEFUN([AM_RUN_LOG],
 
 # Check to make sure that the build environment is sane.    -*- Autoconf -*-
 
-# Copyright (C) 1996-2013 Free Software Foundation, Inc.
+# Copyright (C) 1996-2014 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -10073,7 +10169,7 @@ AC_CONFIG_COMMANDS_PRE(
 rm -f conftest.file
 ])
 
-# Copyright (C) 2009-2013 Free Software Foundation, Inc.
+# Copyright (C) 2009-2014 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -10133,7 +10229,7 @@ AC_SUBST([AM_BACKSLASH])dnl
 _AM_SUBST_NOTMAKE([AM_BACKSLASH])dnl
 ])
 
-# Copyright (C) 2001-2013 Free Software Foundation, Inc.
+# Copyright (C) 2001-2014 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -10161,7 +10257,7 @@ fi
 INSTALL_STRIP_PROGRAM="\$(install_sh) -c -s"
 AC_SUBST([INSTALL_STRIP_PROGRAM])])
 
-# Copyright (C) 2006-2013 Free Software Foundation, Inc.
+# Copyright (C) 2006-2014 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -10180,7 +10276,7 @@ AC_DEFUN([AM_SUBST_NOTMAKE], [_AM_SUBST_NOTMAKE($@)])
 
 # Check how to create a tarball.                            -*- Autoconf -*-
 
-# Copyright (C) 2004-2013 Free Software Foundation, Inc.
+# Copyright (C) 2004-2014 Free Software Foundation, Inc.
 #
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -10328,6 +10424,630 @@ AC_DEFUN([DUNE_IMMO_CHECK_MODULE],
 [
   DUNE_CHECK_MODULES([dune-immo],[immo/immo.hh])
 ])
+
+dnl @synopsis ACX_BLAS([ACTION-IF-FOUND[, ACTION-IF-NOT-FOUND]])
+dnl
+dnl This macro looks for a library that implements the BLAS
+dnl linear-algebra interface (see http://www.netlib.org/blas/). On
+dnl success, it sets the BLAS_LIBS output variable to hold the
+dnl requisite library linkages.
+dnl
+dnl To link with BLAS, you should link with:
+dnl
+dnl 	$BLAS_LIBS $LIBS $FLIBS
+dnl
+dnl in that order. FLIBS is the output variable of the
+dnl AC_F77_LIBRARY_LDFLAGS macro (called if necessary by ACX_BLAS), and
+dnl is sometimes necessary in order to link with F77 libraries. Users
+dnl will also need to use AC_F77_DUMMY_MAIN (see the autoconf manual),
+dnl for the same reason.
+dnl
+dnl Many libraries are searched for, from ATLAS to CXML to ESSL. The
+dnl user may also use --with-blas=<lib> in order to use some specific
+dnl BLAS library <lib>. In order to link successfully, however, be
+dnl aware that you will probably need to use the same Fortran compiler
+dnl (which can be set via the F77 env. var.) as was used to compile the
+dnl BLAS library.
+dnl
+dnl ACTION-IF-FOUND is a list of shell commands to run if a BLAS
+dnl library is found, and ACTION-IF-NOT-FOUND is a list of commands to
+dnl run it if it is not found. If ACTION-IF-FOUND is not specified, the
+dnl default action will define HAVE_BLAS.
+dnl
+dnl This macro requires autoconf 2.50 or later.
+dnl
+dnl @category InstalledPackages
+dnl @author Steven G. Johnson <stevenj@alum.mit.edu>
+dnl @version 2001-12-13
+dnl @license GPLWithACException
+
+AC_DEFUN([ACX_BLAS], [
+AC_PREREQ(2.50)
+AC_REQUIRE([AC_F77_LIBRARY_LDFLAGS])
+acx_blas_ok=no
+
+AC_ARG_WITH(blas,
+	[AC_HELP_STRING([--with-blas=<lib>], [use BLAS library <lib>])])
+case $with_blas in
+	yes | "") ;;
+	no) acx_blas_ok=disable ;;
+	-* | */* | *.a | *.so | *.so.* | *.o) BLAS_LIBS="$with_blas" ;;
+	*) BLAS_LIBS="-l$with_blas" ;;
+esac
+
+# Get fortran linker names of BLAS functions to check for.
+AC_F77_FUNC(sgemm)
+AC_F77_FUNC(dgemm)
+
+acx_blas_save_LIBS="$LIBS"
+LIBS="$LIBS $FLIBS"
+
+# First, check BLAS_LIBS environment variable
+if test $acx_blas_ok = no; then
+if test "x$BLAS_LIBS" != x; then
+	save_LIBS="$LIBS"; LIBS="$BLAS_LIBS $LIBS"
+	AC_MSG_CHECKING([for $sgemm in $BLAS_LIBS])
+	AC_LINK_IFELSE(
+        [AC_LANG_CALL([], $sgemm)],
+        [acx_blas_ok=yes],
+        [BLAS_LIBS=""])
+	AC_MSG_RESULT($acx_blas_ok)
+	LIBS="$save_LIBS"
+fi
+fi
+
+# BLAS linked to by default?  (happens on some supercomputers)
+if test $acx_blas_ok = no; then
+	save_LIBS="$LIBS"; LIBS="$LIBS"
+	AC_CHECK_FUNC($sgemm, [acx_blas_ok=yes])
+	LIBS="$save_LIBS"
+fi
+
+# BLAS in ATLAS library? (http://math-atlas.sourceforge.net/)
+if test $acx_blas_ok = no; then
+	AC_CHECK_LIB(atlas, ATL_xerbla,
+		[AC_CHECK_LIB(f77blas, $sgemm,
+		[AC_CHECK_LIB(cblas, cblas_dgemm,
+			[acx_blas_ok=yes
+			 BLAS_LIBS="-lcblas -lf77blas -latlas"],
+			[], [-lf77blas -latlas])],
+			[], [-latlas])])
+fi
+
+# BLAS in PhiPACK libraries? (requires generic BLAS lib, too)
+if test $acx_blas_ok = no; then
+	AC_CHECK_LIB(blas, $sgemm,
+		[AC_CHECK_LIB(dgemm, $dgemm,
+		[AC_CHECK_LIB(sgemm, $sgemm,
+			[acx_blas_ok=yes; BLAS_LIBS="-lsgemm -ldgemm -lblas"],
+			[], [-lblas])],
+			[], [-lblas])])
+fi
+
+# BLAS in Alpha CXML library?
+if test $acx_blas_ok = no; then
+	AC_CHECK_LIB(cxml, $sgemm, [acx_blas_ok=yes;BLAS_LIBS="-lcxml"])
+fi
+
+# BLAS in Alpha DXML library? (now called CXML, see above)
+if test $acx_blas_ok = no; then
+	AC_CHECK_LIB(dxml, $sgemm, [acx_blas_ok=yes;BLAS_LIBS="-ldxml"])
+fi
+
+# BLAS in Sun Performance library?
+if test $acx_blas_ok = no; then
+	if test "x$GCC" != xyes; then # only works with Sun CC
+		AC_CHECK_LIB(sunmath, acosp,
+			[AC_CHECK_LIB(sunperf, $sgemm,
+        			[BLAS_LIBS="-xlic_lib=sunperf -lsunmath"
+                                 acx_blas_ok=yes],[],[-lsunmath])])
+	fi
+fi
+
+# BLAS in SCSL library?  (SGI/Cray Scientific Library)
+if test $acx_blas_ok = no; then
+	AC_CHECK_LIB(scs, $sgemm, [acx_blas_ok=yes; BLAS_LIBS="-lscs"])
+fi
+
+# BLAS in SGIMATH library?
+if test $acx_blas_ok = no; then
+	AC_CHECK_LIB(complib.sgimath, $sgemm,
+		     [acx_blas_ok=yes; BLAS_LIBS="-lcomplib.sgimath"])
+fi
+
+# BLAS in IBM ESSL library? (requires generic BLAS lib, too)
+if test $acx_blas_ok = no; then
+	AC_CHECK_LIB(blas, $sgemm,
+		[AC_CHECK_LIB(essl, $sgemm,
+			[acx_blas_ok=yes; BLAS_LIBS="-lessl -lblas"],
+			[], [-lblas $FLIBS])])
+fi
+
+# Generic BLAS library?
+if test $acx_blas_ok = no; then
+	AC_CHECK_LIB(blas, $sgemm, [acx_blas_ok=yes; BLAS_LIBS="-lblas"])
+fi
+
+AC_SUBST(BLAS_LIBS)
+
+LIBS="$acx_blas_save_LIBS"
+
+# Finally, execute ACTION-IF-FOUND/ACTION-IF-NOT-FOUND:
+if test x"$acx_blas_ok" = xyes; then
+        ifelse([$1],,AC_DEFINE(HAVE_BLAS,1,[Define if you have a BLAS library.]),[$1])
+        :
+else
+        acx_blas_ok=no
+        $2
+fi
+])dnl ACX_BLAS
+
+dnl @synopsis ACX_LAPACK([ACTION-IF-FOUND[, ACTION-IF-NOT-FOUND]])
+dnl
+dnl This macro looks for a library that implements the LAPACK
+dnl linear-algebra interface (see http://www.netlib.org/lapack/). On
+dnl success, it sets the LAPACK_LIBS output variable to hold the
+dnl requisite library linkages.
+dnl
+dnl To link with LAPACK, you should link with:
+dnl
+dnl     $LAPACK_LIBS $BLAS_LIBS $LIBS $FLIBS
+dnl
+dnl in that order. BLAS_LIBS is the output variable of the ACX_BLAS
+dnl macro, called automatically. FLIBS is the output variable of the
+dnl AC_F77_LIBRARY_LDFLAGS macro (called if necessary by ACX_BLAS), and
+dnl is sometimes necessary in order to link with F77 libraries. Users
+dnl will also need to use AC_F77_DUMMY_MAIN (see the autoconf manual),
+dnl for the same reason.
+dnl
+dnl The user may also use --with-lapack=<lib> in order to use some
+dnl specific LAPACK library <lib>. In order to link successfully,
+dnl however, be aware that you will probably need to use the same
+dnl Fortran compiler (which can be set via the F77 env. var.) as was
+dnl used to compile the LAPACK and BLAS libraries.
+dnl
+dnl ACTION-IF-FOUND is a list of shell commands to run if a LAPACK
+dnl library is found, and ACTION-IF-NOT-FOUND is a list of commands to
+dnl run it if it is not found. If ACTION-IF-FOUND is not specified, the
+dnl default action will define HAVE_LAPACK.
+dnl
+dnl @category InstalledPackages
+dnl @author Steven G. Johnson <stevenj@alum.mit.edu>
+dnl @version 2002-03-12
+dnl @license GPLWithACException
+
+AC_DEFUN([ACX_LAPACK], [
+AC_REQUIRE([ACX_BLAS])
+acx_lapack_ok=no
+
+AC_ARG_WITH(lapack,
+        [AC_HELP_STRING([--with-lapack=<lib>], [use LAPACK library <lib>])])
+case $with_lapack in
+        yes | "") ;;
+        no) acx_lapack_ok=disable ;;
+        -* | */* | *.a | *.so | *.so.* | *.o) LAPACK_LIBS="$with_lapack" ;;
+        *) LAPACK_LIBS="-l$with_lapack" ;;
+esac
+
+# Get fortran linker name of LAPACK function to check for.
+AC_F77_FUNC(cheev)
+
+# We cannot use LAPACK if BLAS is not found
+if test "x$acx_blas_ok" != xyes; then
+        acx_lapack_ok=noblas
+fi
+
+# First, check LAPACK_LIBS environment variable
+if test "x$LAPACK_LIBS" != x; then
+        save_LIBS="$LIBS"; LIBS="$LAPACK_LIBS $BLAS_LIBS $LIBS $FLIBS"
+        AC_MSG_CHECKING([for $cheev in $LAPACK_LIBS])
+        AC_LINK_IFELSE(
+                [AC_LANG_CALL([], $cheev)],
+                [acx_lapack_ok=yes],
+                [LAPACK_LIBS=""])
+        AC_MSG_RESULT($acx_lapack_ok)
+        LIBS="$save_LIBS"
+        if test acx_lapack_ok = no; then
+                LAPACK_LIBS=""
+        fi
+fi
+
+# LAPACK linked to by default?  (is sometimes included in BLAS lib)
+if test $acx_lapack_ok = no; then
+        save_LIBS="$LIBS"; LIBS="$LIBS $BLAS_LIBS $FLIBS"
+        AC_CHECK_FUNC($cheev, [acx_lapack_ok=yes])
+        LIBS="$save_LIBS"
+fi
+
+# Generic LAPACK library?
+for lapack in lapack lapack_rs6k; do
+        if test $acx_lapack_ok = no; then
+                save_LIBS="$LIBS"; LIBS="$BLAS_LIBS $LIBS"
+                AC_CHECK_LIB($lapack, $cheev,
+                    [acx_lapack_ok=yes; LAPACK_LIBS="-l$lapack"], [], [$FLIBS])
+                LIBS="$save_LIBS"
+        fi
+done
+
+AC_SUBST(LAPACK_LIBS)
+
+# Finally, execute ACTION-IF-FOUND/ACTION-IF-NOT-FOUND:
+if test x"$acx_lapack_ok" = xyes; then
+        ifelse([$1],,AC_DEFINE(HAVE_LAPACK,1,[Define if you have LAPACK library.]),[$1])
+        :
+else
+        acx_lapack_ok=no
+        $2
+fi
+])dnl ACX_LAPACK
+
+dnl @synopsis ACX_MPI([ACTION-IF-FOUND[, ACTION-IF-NOT-FOUND]])
+dnl
+dnl This macro tries to find out how to compile programs that use MPI
+dnl (Message Passing Interface), a standard API for parallel process
+dnl communication (see http://www-unix.mcs.anl.gov/mpi/)
+dnl
+dnl On success, it sets the MPICC, MPICXX, or MPIF77 output variable to
+dnl the name of the MPI compiler, depending upon the current language.
+dnl (This may just be $CC/$CXX/$F77, but is more often something like
+dnl mpicc/mpiCC/mpif77.) It also sets MPILIBS to any libraries that are
+dnl needed for linking MPI (e.g. -lmpi, if a special
+dnl MPICC/MPICXX/MPIF77 was not found).
+dnl
+dnl If you want to compile everything with MPI, you should set:
+dnl
+dnl     CC="$MPICC" #OR# CXX="$MPICXX" #OR# F77="$MPIF77"
+dnl     LIBS="$MPILIBS $LIBS"
+dnl
+dnl The user can force a particular library/compiler by setting the
+dnl MPICC/MPICXX/MPIF77 and/or MPILIBS environment variables.
+dnl
+dnl ACTION-IF-FOUND is a list of shell commands to run if an MPI
+dnl library is found, and ACTION-IF-NOT-FOUND is a list of commands to
+dnl run it if it is not found. If ACTION-IF-FOUND is not specified, the
+dnl default action will define HAVE_MPI.
+dnl
+dnl @category InstalledPackages
+dnl @author Steven G. Johnson <stevenj@alum.mit.edu>
+dnl @version 2004-11-05
+dnl @license GPLWithACException
+
+AC_DEFUN([ACX_MPI], [
+AC_PREREQ(2.50) dnl for AC_LANG_CASE
+
+AC_LANG_CASE([C], [
+	AC_REQUIRE([AC_PROG_CC])
+	AC_ARG_VAR(MPICC,[MPI C compiler command])
+	AC_CHECK_PROGS(MPICC, mpicc hcc mpcc mpcc_r mpxlc cmpicc, $CC)
+	acx_mpi_save_CC="$CC"
+	LAMMPICC="$CC"
+	CC="$MPICC"
+	AC_SUBST(MPICC)
+],
+[C++], [
+	AC_REQUIRE([AC_PROG_CXX])
+	AC_ARG_VAR(MPICXX,[MPI C++ compiler command])
+	AC_CHECK_PROGS(MPICXX, mpic++ mpicxx mpiCC mpCC hcp mpxlC mpxlC_r cmpic++, $CXX)
+	acx_mpi_save_CXX="$CXX"
+	LAMMPICXX="$CXX"
+	CXX="$MPICXX"
+	AC_SUBST(MPICXX)
+],
+[Fortran 77], [
+	AC_REQUIRE([AC_PROG_F77])
+	AC_ARG_VAR(MPIF77,[MPI Fortran compiler command])
+	AC_CHECK_PROGS(MPIF77, mpif77 hf77 mpxlf mpf77 mpif90 mpf90 mpxlf90 mpxlf95 mpxlf_r cmpifc cmpif90c, $F77)
+	acx_mpi_save_F77="$F77"
+	LAMMPIF77="$F77"
+	F77="$MPIF77"
+	AC_SUBST(MPIF77)
+])
+
+if test x = x"$MPILIBS"; then
+	AC_LANG_CASE([C], [AC_CHECK_FUNC(MPI_Init, [MPILIBS=" "])],
+		[C++], [AC_CHECK_FUNC(MPI_Init, [MPILIBS=" "])],
+		[Fortran 77], [AC_MSG_CHECKING([for MPI_Init])
+        AC_LINK_IFELSE(
+              [AC_LANG_PROGRAM([], [[call MPI_Init]])],
+              [MPILIBS=" "
+                AC_MSG_RESULT(yes)],
+              [AC_MSG_RESULT(no)])])
+fi
+if test x = x"$MPILIBS"; then
+	AC_CHECK_LIB(mpi, MPI_Init, [MPILIBS="-lmpi"])
+fi
+if test x = x"$MPILIBS"; then
+	AC_CHECK_LIB(mpich, MPI_Init, [MPILIBS="-lmpich"])
+fi
+
+dnl We have to use AC_COMPILE_IFELSE and not AC_CHECK_HEADER because the
+dnl latter uses $CPP, not $CC (which may be mpicc).
+AC_LANG_CASE([C], [if test x != x"$MPILIBS"; then
+	AC_MSG_CHECKING([for mpi.h])
+	export LAMMPICC="$acx_mpi_save_CC"
+	AC_COMPILE_IFELSE([
+		AC_LANG_PROGRAM([[
+			#include <mpi.h>
+		]], [])],
+		AC_MSG_RESULT(yes),
+		[MPILIBS=""
+			AC_MSG_RESULT(no)])
+	unset LAMMPICC
+fi],
+[C++], [if test x != x"$MPILIBS"; then
+	AC_MSG_CHECKING([for mpi.h])
+	export LAMMPICXX="$acx_mpi_save_CXX"
+	AC_COMPILE_IFELSE([
+		AC_LANG_PROGRAM([[
+			#include <mpi.h>
+		]], [])],
+		AC_MSG_RESULT(yes),
+		[MPILIBS=""
+			AC_MSG_RESULT(no)])
+	unset LAMMPICXX
+fi])
+
+AC_LANG_CASE([C], [CC="$acx_mpi_save_CC"],
+	[C++], [CXX="$acx_mpi_save_CXX"],
+	[Fortran 77], [F77="$acx_mpi_save_F77"])
+
+AC_SUBST(MPILIBS)
+
+# Finally, execute ACTION-IF-FOUND/ACTION-IF-NOT-FOUND:
+if test x = x"$MPILIBS"; then
+        $2
+        :
+else
+        ifelse([$1],,[AC_DEFINE(HAVE_MPI,1,[Define if you have the MPI library.])],[$1])
+        :
+fi
+])dnl ACX_MPI
+
+dnl @synopsis ACX_PTHREAD([ACTION-IF-FOUND[, ACTION-IF-NOT-FOUND]])
+dnl
+dnl This macro figures out how to build C programs using POSIX threads.
+dnl It sets the PTHREAD_LIBS output variable to the threads library and
+dnl linker flags, and the PTHREAD_CFLAGS output variable to any special
+dnl C compiler flags that are needed. (The user can also force certain
+dnl compiler flags/libs to be tested by setting these environment
+dnl variables.)
+dnl
+dnl Also sets PTHREAD_CC to any special C compiler that is needed for
+dnl multi-threaded programs (defaults to the value of CC otherwise).
+dnl (This is necessary on AIX to use the special cc_r compiler alias.)
+dnl
+dnl NOTE: You are assumed to not only compile your program with these
+dnl flags, but also link it with them as well. e.g. you should link
+dnl with $PTHREAD_CC $CFLAGS $PTHREAD_CFLAGS $LDFLAGS ... $PTHREAD_LIBS
+dnl $LIBS
+dnl
+dnl If you are only building threads programs, you may wish to use
+dnl these variables in your default LIBS, CFLAGS, and CC:
+dnl
+dnl        LIBS="$PTHREAD_LIBS $LIBS"
+dnl        CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
+dnl        CC="$PTHREAD_CC"
+dnl
+dnl In addition, if the PTHREAD_CREATE_JOINABLE thread-attribute
+dnl constant has a nonstandard name, defines PTHREAD_CREATE_JOINABLE to
+dnl that name (e.g. PTHREAD_CREATE_UNDETACHED on AIX).
+dnl
+dnl ACTION-IF-FOUND is a list of shell commands to run if a threads
+dnl library is found, and ACTION-IF-NOT-FOUND is a list of commands to
+dnl run it if it is not found. If ACTION-IF-FOUND is not specified, the
+dnl default action will define HAVE_PTHREAD.
+dnl
+dnl Please let the authors know if this macro fails on any platform, or
+dnl if you have any other suggestions or comments. This macro was based
+dnl on work by SGJ on autoconf scripts for FFTW (www.fftw.org) (with
+dnl help from M. Frigo), as well as ac_pthread and hb_pthread macros
+dnl posted by Alejandro Forero Cuervo to the autoconf macro repository.
+dnl We are also grateful for the helpful feedback of numerous users.
+dnl
+dnl @category InstalledPackages
+dnl @author Steven G. Johnson <stevenj@alum.mit.edu>
+dnl @version 2005-01-14
+dnl @license GPLWithACException
+
+AC_DEFUN([ACX_PTHREAD], [
+AC_REQUIRE([AC_CANONICAL_HOST])
+AC_LANG_SAVE
+AC_LANG_C
+acx_pthread_ok=no
+
+# We used to check for pthread.h first, but this fails if pthread.h
+# requires special compiler flags (e.g. on True64 or Sequent).
+# It gets checked for in the link test anyway.
+
+# First of all, check if the user has set any of the PTHREAD_LIBS,
+# etcetera environment variables, and if threads linking works using
+# them:
+if test x"$PTHREAD_LIBS$PTHREAD_CFLAGS" != x; then
+        save_CFLAGS="$CFLAGS"
+        CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
+        save_LIBS="$LIBS"
+        LIBS="$PTHREAD_LIBS $LIBS"
+        AC_MSG_CHECKING([for pthread_join in LIBS=$PTHREAD_LIBS with CFLAGS=$PTHREAD_CFLAGS])
+        AC_LINK_IFELSE(
+                [AC_LANG_CALL([], [pthread_join])],
+                [acx_pthread_ok=yes],
+                [])
+        AC_MSG_RESULT($acx_pthread_ok)
+        if test x"$acx_pthread_ok" = xno; then
+                PTHREAD_LIBS=""
+                PTHREAD_CFLAGS=""
+        fi
+        LIBS="$save_LIBS"
+        CFLAGS="$save_CFLAGS"
+fi
+
+# We must check for the threads library under a number of different
+# names; the ordering is very important because some systems
+# (e.g. DEC) have both -lpthread and -lpthreads, where one of the
+# libraries is broken (non-POSIX).
+
+# Create a list of thread flags to try.  Items starting with a "-" are
+# C compiler flags, and other items are library names, except for "none"
+# which indicates that we try without any flags at all, and "pthread-config"
+# which is a program returning the flags for the Pth emulation library.
+
+acx_pthread_flags="pthreads none -Kthread -kthread lthread -pthread -pthreads -mthreads pthread --thread-safe -mt pthread-config"
+
+# The ordering *is* (sometimes) important.  Some notes on the
+# individual items follow:
+
+# pthreads: AIX (must check this before -lpthread)
+# none: in case threads are in libc; should be tried before -Kthread and
+#       other compiler flags to prevent continual compiler warnings
+# -Kthread: Sequent (threads in libc, but -Kthread needed for pthread.h)
+# -kthread: FreeBSD kernel threads (preferred to -pthread since SMP-able)
+# lthread: LinuxThreads port on FreeBSD (also preferred to -pthread)
+# -pthread: Linux/gcc (kernel threads), BSD/gcc (userland threads)
+# -pthreads: Solaris/gcc
+# -mthreads: Mingw32/gcc, Lynx/gcc
+# -mt: Sun Workshop C (may only link SunOS threads [-lthread], but it
+#      doesn't hurt to check since this sometimes defines pthreads too;
+#      also defines -D_REENTRANT)
+# pthread: Linux, etcetera
+# --thread-safe: KAI C++
+# pthread-config: use pthread-config program (for GNU Pth library)
+
+case "${host_cpu}-${host_os}" in
+        *solaris*)
+
+        # On Solaris (at least, for some versions), libc contains stubbed
+        # (non-functional) versions of the pthreads routines, so link-based
+        # tests will erroneously succeed.  (We need to link with -pthread or
+        # -lpthread.)  (The stubs are missing pthread_cleanup_push, or rather
+        # a function called by this macro, so we could check for that, but
+        # who knows whether they'll stub that too in a future libc.)  So,
+        # we'll just look for -pthreads and -lpthread first:
+
+        acx_pthread_flags="-pthread -pthreads pthread -mt $acx_pthread_flags"
+        ;;
+esac
+
+if test x"$acx_pthread_ok" = xno; then
+for flag in $acx_pthread_flags; do
+
+        case $flag in
+                none)
+                AC_MSG_CHECKING([whether pthreads work without any flags])
+                ;;
+
+                -*)
+                AC_MSG_CHECKING([whether pthreads work with $flag])
+                PTHREAD_CFLAGS="$flag"
+                ;;
+
+		pthread-config)
+		AC_CHECK_PROG(acx_pthread_config, pthread-config, yes, no)
+		if test x"$acx_pthread_config" = xno; then continue; fi
+		PTHREAD_CFLAGS="`pthread-config --cflags`"
+		PTHREAD_LIBS="`pthread-config --ldflags` `pthread-config --libs`"
+		;;
+
+                *)
+                AC_MSG_CHECKING([for the pthreads library -l$flag])
+                PTHREAD_LIBS="-l$flag"
+                ;;
+        esac
+
+        save_LIBS="$LIBS"
+        save_CFLAGS="$CFLAGS"
+        LIBS="$PTHREAD_LIBS $LIBS"
+        CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
+
+        # Check for various functions.  We must include pthread.h,
+        # since some functions may be macros.  (On the Sequent, we
+        # need a special flag -Kthread to make this header compile.)
+        # We check for pthread_join because it is in -lpthread on IRIX
+        # while pthread_create is in libc.  We check for pthread_attr_init
+        # due to DEC craziness with -lpthreads.  We check for
+        # pthread_cleanup_push because it is one of the few pthread
+        # functions on Solaris that doesn't have a non-functional libc stub.
+        # We try pthread_create on general principles.
+        AC_LINK_IFELSE(
+                [AC_LANG_PROGRAM(
+                        [[#include <pthread.h>]],
+                        [[pthread_t th; pthread_join(th, 0);
+                          pthread_attr_init(0); pthread_cleanup_push(0, 0);
+                          pthread_create(0,0,0,0); pthread_cleanup_pop(0);]])],
+                [acx_pthread_ok=yes],
+                [])
+
+        LIBS="$save_LIBS"
+        CFLAGS="$save_CFLAGS"
+
+        AC_MSG_RESULT($acx_pthread_ok)
+        if test "x$acx_pthread_ok" = xyes; then
+                break;
+        fi
+
+        PTHREAD_LIBS=""
+        PTHREAD_CFLAGS=""
+done
+fi
+
+# Various other checks:
+if test "x$acx_pthread_ok" = xyes; then
+        save_LIBS="$LIBS"
+        LIBS="$PTHREAD_LIBS $LIBS"
+        save_CFLAGS="$CFLAGS"
+        CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
+
+        # Detect AIX lossage: JOINABLE attribute is called UNDETACHED.
+	AC_MSG_CHECKING([for joinable pthread attribute])
+	attr_name=unknown
+	for attr in PTHREAD_CREATE_JOINABLE PTHREAD_CREATE_UNDETACHED; do
+        AC_LINK_IFELSE(
+            [AC_LANG_PROGRAM(
+                [[#include <pthread.h>]],
+                [[int attr=$attr;]])],
+            [attr_name=$attr; break],
+            [])
+	done
+        AC_MSG_RESULT($attr_name)
+        if test "$attr_name" != PTHREAD_CREATE_JOINABLE; then
+            AC_DEFINE_UNQUOTED(PTHREAD_CREATE_JOINABLE, $attr_name,
+                               [Define to necessary symbol if this constant
+                                uses a non-standard name on your system.])
+        fi
+
+        AC_MSG_CHECKING([if more special flags are required for pthreads])
+        flag=no
+        case "${host_cpu}-${host_os}" in
+            *-aix* | *-freebsd* | *-darwin*) flag="-D_THREAD_SAFE";;
+            *solaris* | *-osf* | *-hpux*) flag="-D_REENTRANT";;
+        esac
+        AC_MSG_RESULT(${flag})
+        if test "x$flag" != xno; then
+            PTHREAD_CFLAGS="$flag $PTHREAD_CFLAGS"
+        fi
+
+        LIBS="$save_LIBS"
+        CFLAGS="$save_CFLAGS"
+
+        # More AIX lossage: must compile with cc_r
+        AC_CHECK_PROG(PTHREAD_CC, cc_r, cc_r, ${CC})
+else
+        PTHREAD_CC="$CC"
+fi
+
+AC_SUBST(PTHREAD_LIBS)
+AC_SUBST(PTHREAD_CFLAGS)
+AC_SUBST(PTHREAD_CC)
+
+# Finally, execute ACTION-IF-FOUND/ACTION-IF-NOT-FOUND:
+if test x"$acx_pthread_ok" = xyes; then
+        ifelse([$1],,AC_DEFINE(HAVE_PTHREAD,1,[Define if you have POSIX threads libraries and header files.]),[$1])
+        :
+else
+        acx_pthread_ok=no
+        $2
+fi
+AC_LANG_RESTORE
+])dnl ACX_PTHREAD
 
 # $Id: alberta.m4 5156 2008-04-14 09:28:06Z christi $
 # searches for alberta-headers and libs
@@ -11040,1272 +11760,6 @@ DUNE_ADD_SUMMARY_ENTRY([AmiraMesh],[$with_amiramesh])
 
 ])
 
-dnl This macro introduces a configure flag --enable-experimental-grid-extensions
-dnl that is used to publicly grant access to the implementation of the dune-grid
-dnl facades (e.g., Entity, Geometry, etc.).
-
-AC_DEFUN([DUNE_EXPERIMENTAL_GRID_EXTENSIONS],[
-  AC_ARG_ENABLE(experimental-grid-extensions,
-    AS_HELP_STRING([--enable-experimental-grid-extensions],[If this is set, public access to the implementation of facades like Entity, Geometry, etc. is granted.]))
-
-  AS_IF([test "x$enable_experimental_grid_extensions" = "xyes"],
-    AC_DEFINE(DUNE_GRID_EXPERIMENTAL_GRID_EXTENSIONS, 1, [If this is set, public access to the implementation of facades like Entity, Geometry, etc. is granted.]))
-])
-
-AC_DEFUN([DUNE_GRID_CHECKS],[
-  AC_REQUIRE([DUNE_GRID_DIMENSION])
-  AC_REQUIRE([DUNE_PATH_GRAPE])
-  AC_REQUIRE([DUNE_PATH_ALBERTA])
-  AC_REQUIRE([DUNE_PATH_UG])
-  AC_REQUIRE([DUNE_PATH_AMIRAMESH])
-  AC_REQUIRE([DUNE_PATH_PSURFACE])
-  AC_REQUIRE([DUNE_PATH_ALUGRID])
-  AC_REQUIRE([DUNE_EXPERIMENTAL_GRID_EXTENSIONS])
-
-  DUNE_DEFINE_GRIDTYPE([ONEDGRID],[(GRIDDIM == 1) && (WORLDDIM == 1)],[Dune::OneDGrid],[dune/grid/onedgrid.hh],[dune/grid/io/file/dgfparser/dgfoned.hh])
-  DUNE_DEFINE_GRIDTYPE([SGRID],[],[Dune::SGrid< dimgrid, dimworld >],[dune/grid/sgrid.hh],[dune/grid/io/file/dgfparser/dgfs.hh])
-  DUNE_DEFINE_GRIDTYPE([YASPGRID],[GRIDDIM == WORLDDIM],[Dune::YaspGrid< dimgrid >],[dune/grid/yaspgrid.hh],[dune/grid/io/file/dgfparser/dgfyasp.hh])
-])
-
-AC_DEFUN([DUNE_GRID_CHECK_MODULE],[
-  DUNE_CHECK_MODULES([dune-grid], [grid/onedgrid.hh],[dnl
-  std::vector<Dune::OneDGrid::ctype> coords;
-  Dune::OneDGrid grid(coords);
-  return grid.lbegin<0>(0) == grid.lend<0>(0);])
-])
-
-# define GRIDDIM_CPPFLAGS and add to DUNE_PKG_CPPFLAGS
-# This defines GRIDDIM, WORLDDIM, and GRIDTYPE and assigns invalid values 
-AC_DEFUN([DUNE_GRID_DIMENSION],[
-  griddim_cppflags="-DGRIDDIM=$``(``GRIDDIM``)`` -DWORLDDIM=$``(``WORLDDIM``)`` -D$``(``GRIDTYPE``)``"
-  AC_SUBST(GRIDDIM, 0)
-  AC_SUBST(WORLDDIM, "$``(``GRIDDIM``)``")
-
-  AC_SUBST(GRIDTYPE, [NOGRID])
-  AC_SUBST(GRIDDIM_CPPFLAGS, $griddim_cppflags)
-  DUNE_ADD_ALL_PKG([GRIDDIM], [$griddim_cppflags])
-  # AC_MSG_RESULT([yes (GRIDDIM=$GRIDDIM, WORLDDIM=GRIDDIM and GRIDTYPE=$GRIDTYPE)])
-])
-
-AC_DEFUN([DUNE_DEFINE_GRIDTYPE_INCLUDE],[dnl
-m4_if($#,0,[],[dnl
-  #include <$1>
-m4_if($#,1,[],[DUNE_DEFINE_GRIDTYPE_INCLUDE(m4_shift($@))])dnl
-])dnl
-])
-
-
-# DUNE_DEFINE_GRIDTYPE([GRIDTYPE],[ASSERTION],[DUNETYPE],[HEADER],...)
-#
-# Add a new GRIDTYPE target to DUNE's preprocessor magic.
-# 
-# Parameters: GRIDTYPE   name of the new target
-#             ASSERTION  condition to be checked by the preprocessor
-#             DUNETYPE   C++ type of the grid
-#             HEADER     name of the header file which includes the grid
-#
-# Example: DUNE_DEFINE_GRIDTYPE([YASPGRID],[GRIDDIM == WORLDDIM],[Dune::YaspGrid< dimgrid >],[dune/grid/yaspgrid.hh],[dune/grid/io/file/dgfparser/dgfyasp.hh])
-AC_DEFUN([DUNE_DEFINE_GRIDTYPE],[AH_BOTTOM(dnl
-[/* add GRIDTYPE typedef for grid implementation $3:
-    defining $1 during compilation typedefs this grid implementation as GridType
-    in namespace Dune::GridSelector;
-    also integer constants dimgrid and dimworld are set in this namespace.
-    The required headers for this grid implementation are also included.
-  */
- #if HAVE_DUNE_GRID && defined $1 && ! defined USED_$1_GRIDTYPE
-  #if HAVE_GRIDTYPE
-   #error "Ambiguous definition of GRIDTYPE."
-  #endif 
-
-  #ifndef WORLDDIM
-    #define WORLDDIM GRIDDIM
-  #endif
-  #if not (WORLDDIM >= GRIDDIM)
-    #error "WORLDDIM < GRIDDIM does not make sense."
-  #endif
-]dnl
-m4_if([$2],[],[],[
-  #if ! ($2)
-    #error "Preprocessor assertion $2 failed."
-  #endif
-])
-DUNE_DEFINE_GRIDTYPE_INCLUDE(m4_shift(m4_shift(m4_shift($@))))dnl
-[
-  namespace Dune
-  {
-    namespace GridSelector
-    {
-      const int dimgrid = GRIDDIM;
-      const int dimworld = WORLDDIM;
-      typedef $3 GridType;
-    }
-  }
-  #define HAVE_GRIDTYPE 1
-  #define USED_$1_GRIDTYPE 1
-#endif // #if HAVE_DUNE_GRID && defined $1 && ..]dnl
-)])
-
-# $Id: grape.m4 5710 2009-11-13 17:09:45Z robertk $
-# searches for albert-headers and libs
-
-# grape.h und libgr.a/libgr.so are located in the same discretory 
-
-# DUNE_PATH_GRAPE()
-#
-# configure shell/makefile variables:
-#   GRAPE_CPPFLAGS
-#   GRAPE_LDFLAGS
-#   GRAPE_LIBS
-#
-# preprocessor defines:
-#   HAVE_GRAPE ("ENABLE_GRAPE" or undefined)
-#
-# automake conditionals:
-#   GRAPE
-AC_DEFUN([DUNE_PATH_GRAPE],[
-  AC_REQUIRE([AC_PROG_CC])
-  AC_REQUIRE([AC_PATH_XTRA])
-  AC_REQUIRE([DUNE_PATH_OPENGL])
-  AC_REQUIRE([AC_PROG_LD_GNU])
-
-  AC_ARG_WITH(grape,
-    AC_HELP_STRING([--with-grape=PATH],[directory with Grape inside]))
-
-# store old values
-ac_save_LDFLAGS="$LDFLAGS"
-ac_save_CPPFLAGS="$CPPFLAGS"
-ac_save_LIBS="$LIBS"
-
-# don't even start testing if X wasn't found
-if test "x$no_x" != xyes && test x$with_grape != xno ; then
-
-  LIBS="$X_PRE_LIBS $X_LIBS $X_EXTRA_LIBS"
-
-  # is --with-grape=bla used?
-  if test x$with_grape != x ; then
-    if test -d $with_grape; then
-      # expand tilde / other stuff
-      GRAPEROOT=`cd $with_grape && pwd`
-    else
-      AC_MSG_ERROR([directory $with_grape does not exist])
-    fi      
-  else
-    # set some kind of default grape-path...
-    GRAPEROOT="/usr/local/grape/"
-  fi
-
-  CPPFLAGS="$CPPFLAGS -I$GRAPEROOT"
-  LDFLAGS="$LDFLAGS -L$GRAPEROOT"
-
-  # check for header
-  # we have to use CC for checking the header!!
-  AC_LANG_PUSH([C])
-  AC_CHECK_HEADER([grape.h],
-    [GRAPE_CPPFLAGS="-I$GRAPEROOT"
-     HAVE_GRAPE="1"])
-  AC_LANG_POP
-
-  # check for lib if header was found
-  if test x$HAVE_GRAPE = x1 ; then
-    # if GL was found, add it implicitly...
-    #   This is not the best choice, but testing without GL first and
-    #   then trying again fails due to caching...
-    CPPFLAGS="$GRAPE_CPPFLAGS $GL_CFLAGS -DENABLE_GRAPE"
-    LIBS="$LIBS $GL_LIBS -lXext"
-    LDFLAGS="$LDFLAGS $GL_LDFLAGS"
-
-    # if we use the gnu linker add the grape path 
-    if test x$lt_cv_prog_gnu_ld = xyes ; then 
-      GRAPE_LINKER_FLAGS="-Wl,--rpath -Wl,$GRAPEROOT"
-    fi  
-
-    AC_CHECK_LIB(gr, grape, 
-      [GRAPE_LDFLAGS="$GL_LDFLAGS $GRAPE_LINKER_FLAGS"
-       GRAPE_CPPFLAGS="$CPPFLAGS"
-       GRAPE_LIBS="-L$GRAPEROOT -lgr $GL_LIBS -lXext"], 
-      [HAVE_GRAPE="0"])
-  fi
-
-  # did it work?
-  if test x$HAVE_GRAPE = x1 ; then
-    AC_SUBST(GRAPE_LIBS, $GRAPE_LIBS)
-    AC_SUBST(GRAPE_LDFLAGS, $GRAPE_LDFLAGS)
-    AC_SUBST(GRAPE_CPPFLAGS, $GRAPE_CPPFLAGS)
-    AC_DEFINE(HAVE_GRAPE, ENABLE_GRAPE,
-          [This is only true if grape-library was found by configure 
-           _and_ if the application uses the GRAPE_CPPFLAGS])
-
-    # add to global list
-    DUNE_ADD_ALL_PKG([GRAPE], [$GRAPE_CPPFLAGS], [$GRAPE_LDFLAGS], [$GRAPE_LIBS])
-  fi
-elif test "x$X_LIBS" = x ; then 
-  AC_MSG_WARN([X libraries were not found and therefore not Grape check possible! See ./configure --help for X library options.])
-fi
-
-
-# report to summary
-if test x$HAVE_GRAPE = x1 ; then
-  with_grape="yes"
-else
-  with_grape="no"
-fi
-
-# also tell automake	
-AM_CONDITIONAL(GRAPE, test x$HAVE_GRAPE = x1)
-
-# reset old values
-LIBS="$ac_save_LIBS"
-CPPFLAGS="$ac_save_CPPFLAGS"
-LDFLAGS="$ac_save_LDFLAGS"
-  
-DUNE_ADD_SUMMARY_ENTRY([Grape],[$with_grape])
-
-])
-
-# searches for psurface-headers and lib
-
-# DUNE_PATH_PSURFACE()
-#
-# DUNE_PATH_AMIRAMESH must be called previously if psurface was built with
-# AmiraMesh support
-#
-# shell variables:
-#   with_psurface
-#     yes or no
-#   PSURFACEROOT
-#   PSURFACE_LIB_PATH
-#   PSURFACE_INCLUDE_PATH
-#   PSURFACE_CPPFLAGS
-#   PSURFACE_LDFLAGS
-#   PSURFACE_LIBS
-#   HAVE_PSURFACE
-#     0 or 1
-#
-# substitutions:
-#   PSURFACE_LIBS
-#   PSURFACE_LDFLAGS
-#   PSURFACE_CPPFLAGS
-#
-# defines:
-#   HAVE_PSURFACE
-#
-# conditionals:
-#   PSURFACE
-AC_DEFUN([DUNE_PATH_PSURFACE],[
-  AC_REQUIRE([AC_PROG_CXX])
-  AC_REQUIRE([DUNE_PATH_AMIRAMESH])
-
-  AC_ARG_WITH(psurface,
-    AC_HELP_STRING([--with-psurface=PATH],[directory with the psurface library inside]))
-
-# store values
-ac_save_LDFLAGS="$LDFLAGS"
-ac_save_CPPFLAGS="$CPPFLAGS"
-ac_save_LIBS="$LIBS"
-ac_save_PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
-
-# initialize to sane value
-HAVE_PSURFACE=0
-
-if test x$with_psurface != xno ; then
-
-# is --with-psurface=bla used?
-if test "x$with_psurface" != x ; then
-    if test -d $with_psurface; then
-      # expand tilde / other stuff
-      PSURFACEROOT=`cd $with_psurface && pwd`
-    else
-      AC_MSG_ERROR([directory $with_psurface does not exist])
-    fi
-fi
-if test "x$PSURFACEROOT" = x; then  
-    # use some default value...
-    PSURFACEROOT="/usr/local/psurface"
-fi
-
-    # Check for psurface using pkg-config
-    # This works for psurface-2.0 and later
-    export PKG_CONFIG_PATH="$PSURFACEROOT/lib/pkgconfig:$PSURFACEROOT/lib64/pkgconfig:$PKG_CONFIG_PATH"
-    PKG_CHECK_MODULES([PSURFACE], [psurface], [
-        HAVE_PSURFACE="1"
-        AC_DEFINE(PSURFACE_NAMESPACE,
-                  psurface::,
-                  [The namespace prefix of the psurface library])
-        AC_DEFINE(HAVE_PSURFACE_2_0,
-                  1,
-                  [If set we have at least psurface version 2.0])
-        AC_MSG_RESULT([yes (by pkg-config)])
-    ], [
-        AC_MSG_WARN([PSurface >= 2.0 not found in $PSURFACEROOT])
-    ])
-
-    # PKG_CHECK_MODULES puts the stuff we would expect in PSURFACE_CPPFLAGS
-    # (namely, -I<path>) in PSURFACE_CFLAGS. We therefore copy it by hand.
-    PSURFACE_CPPFLAGS="$PSURFACE_CFLAGS"
-
-# If pkg-config didn't find psurface we may be dealing with an older version
-# of psurface (without pkg-config support).  We try to find that without pkg-config.
-if test x$HAVE_PSURFACE != x1 ; then
-PSURFACE_INCLUDE_PATH="$PSURFACEROOT/include"
-PSURFACE_LIB_PATH="$PSURFACEROOT/lib"
-AS_IF([test -d $PSURFACE_LIB_PATH],
-  [],
-  [PSURFACE_LIB_PATH="$PSURFACEROOT/lib64"])
-
-CPPFLAGS="$CPPFLAGS -I$PSURFACE_INCLUDE_PATH"
-
-AC_LANG_PUSH([C++])
-
-# check for header
-AC_CHECK_HEADER([psurface/PSurface.h], 
-   [PSURFACE_CPPFLAGS="-I$PSURFACE_INCLUDE_PATH"
-	HAVE_PSURFACE="1"],
-   [if test "x$with_psurface" != x ; then
-    AC_MSG_WARN([psurface/PSurface.h not found in $PSURFACE_INCLUDE_PATH])
-    fi
-   ])
-
-CPPFLAGS="$CPPFLAGS $PSURFACE_CPPFLAGS"
-
-# if header is found...
-if test x$HAVE_PSURFACE = x1 ; then
-   AC_MSG_CHECKING([psurface library -lpsurface])
-
-   # Why are the $AMIRAMESH_LDFLAGS $AMIRAMESH_LIBS here?
-   # OS: This is a hack.  psurface can be compiled with and without AmiraMesh
-   # support.  If it is compiled with AmiraMesh support, then it needs these flags
-   # for the test to link (and since these flags must be set properly the AmiraMesh
-   # test must have been called successfully before).  If psurface is compiled
-   # without AmiraMesh support than the additional flags here do not matter.
-   LIBS="-L$PSURFACE_LIB_PATH -lpsurface $AMIRAMESH_LIBS $LIBS"
-   LDFLAGS="$LDFLAGS $AMIRAMESH_LDFLAGS"
-
-   # Try to link to the library (for libpsurface-1.3 and newer)
-   AC_LINK_IFELSE([AC_LANG_PROGRAM([#include "psurface/PSurface.h"], [[psurface::PSurface<2,double> foo;]])],
-	[PSURFACE_LIBS="-L$PSURFACE_LIB_PATH -lpsurface"
-         PSURFACE_LDFLAGS=""
-         AC_DEFINE(PSURFACE_NAMESPACE, 
-                   psurface::,
-                   [The namespace prefix of the psurface library])
-         AC_MSG_RESULT([yes (1.3 or newer)])],
-	[HAVE_PSURFACE="0"])
-
-   if test x$HAVE_PSURFACE = x0 ; then
-
-       # Try to link to the library (for libpsurface-1.2 and older)
-       AC_LINK_IFELSE([AC_LANG_PROGRAM([#include "psurface/PSurface.h"], [[PSurface<2,double> foo;]])],
-            [PSURFACE_LIBS="-L$PSURFACE_LIB_PATH -lpsurface"
-             PSURFACE_LDFLAGS=""
-             HAVE_PSURFACE="1"
-             AC_DEFINE(PSURFACE_NAMESPACE, 
-                       [],
-                       [The namespace prefix of the psurface library])
-             AC_MSG_RESULT([yes (1.2 or older)])],
-            [HAVE_PSURFACE="0"
-             AC_MSG_RESULT(no)
-             AC_MSG_WARN([psurface header found, but libpsurface missing!])])
-    fi
-
-fi
-
-AC_LANG_POP([C++])
-
-fi
-
-fi
-
-with_psurface="no"
-# survived all tests?
-if test x$HAVE_PSURFACE = x1 ; then
-  AC_SUBST(PSURFACE_LIBS, $PSURFACE_LIBS)
-  AC_SUBST(PSURFACE_LDFLAGS, $PSURFACE_LDFLAGS)
-  AC_SUBST(PSURFACE_CPPFLAGS, $PSURFACE_CPPFLAGS)
-  AC_DEFINE(HAVE_PSURFACE, 1, [Define to 1 if psurface-library is found])
-
-  # add to global list
-  DUNE_ADD_ALL_PKG([psurface], [$PSURFACE_CPPFLAGS],
-                   [$PSURFACE_LDFLAGS], [$PSURFACE_LIBS])
-
-  # set variable for summary
-  with_psurface="yes"
-else
-  AC_SUBST(PSURFACE_LIBS, "")
-  AC_SUBST(PSURFACE_LDFLAGS, "")
-  AC_SUBST(PSURFACE_CPPFLAGS, "")
-fi
-
-# also tell automake
-AM_CONDITIONAL(PSURFACE, test x$HAVE_PSURFACE = x1)
-
-# reset old values
-LIBS="$ac_save_LIBS"
-CPPFLAGS="$ac_save_CPPFLAGS"
-LDFLAGS="$ac_save_LDFLAGS"
-PKG_CONFIG_PATH="$ac_save_PKG_CONFIG_PATH"
-
-DUNE_ADD_SUMMARY_ENTRY([psurface],[$with_psurface])
-
-])
-
-# $Id: ug.m4 5156 2008-04-14 09:28:06Z christi $
-# searches for UG headers and libs
-
-# DUNE_PATH_UG()
-#
-# configure shell variables:
-#   UGROOT
-#   UG_CPPFLAGS, UG_LDFLAGS, UG_LIBS
-#       flags and libs with indirect references for the makefiles, for
-#       instance the literal string '${DUNEMPICPPFLAGS}
-#   direct_UG_CPPFLAGS, direct_UG_LDFLAGS, direct_UG_LIBS
-#       flags and libs with direct values for use in configure, for instance
-#       the value of DUNEMPICPPFLAGS
-#   HAVE_UG
-#       1 or 0 or undefined
-#   with_ug
-#       "no" or "yes" with stuff appended
-#
-# configure substitutions/makefile variables:
-#   UG_CPPFLAGS
-#   UG_LDFLAGS
-#   UG_LIBS
-#
-# preprocessor defines:
-#   HAVE_UG
-#     undefined or ENABLE_UG
-#
-# automake conditionals:
-#   UG
-AC_DEFUN([DUNE_PATH_UG],[
-  AC_REQUIRE([AC_PROG_CC])
-  AC_REQUIRE([AC_PATH_XTRA])
-  AC_REQUIRE([DUNE_MPI])
-
-  AC_ARG_WITH(ug,
-    AC_HELP_STRING([--with-ug=PATH],[directory where UG is installed]))
-
-  # store old values
-  ac_save_LDFLAGS="$LDFLAGS"
-  ac_save_CPPFLAGS="$CPPFLAGS"
-  ac_save_LIBS="$LIBS"
-  
-  # initialize
-  HAVE_UG=0
-
-  ## do nothing if --without-ug is used
-  if test x$with_ug != xno ; then
-      
-      # is --with-ug=bla used?
-      if test "x$with_ug" != x ; then
-          if ! test -d $with_ug; then
-              AC_MSG_WARN([UG directory $with_ug does not exist!])
-          else
-              # expand tilde / other stuff
-              UGROOT=`cd $with_ug && pwd`
-          fi
-      fi
-
-      # If an explicit path has been provided it needs to be appended
-      # temporarily to PKG_CONFIG_PATH
-      REM_PKG_CONFIG_PATH=$PKG_CONFIG_PATH
-      # The first additional path is for uninstalled UG, the second one for the installed UG
-	  UGLIBPKCONFIG=`echo $UGROOT/lib*/pkgconfig | sed -e 's/\s\+/:/g'`
-      PKG_CONFIG_PATH="$UGROOT:$UGLIBPKCONFIG:$PKG_CONFIG_PATH"
-
-      UG_LDFLAGS=""
-
-      UG_LIBS="`PKG_CONFIG_PATH=$PKG_CONFIG_PATH $PKG_CONFIG --libs-only-L libug` -lugS2 -lugS3 -ldevS"
-      direct_UG_LIBS="`PKG_CONFIG_PATH=$PKG_CONFIG_PATH $PKG_CONFIG --libs-only-L libug` -lugS2 -lugS3 -ldevS"
-      
-      AC_MSG_CHECKING([for UG])
-
-      # Check whether UG is installed at all
-      if PKG_CONFIG_PATH=$PKG_CONFIG_PATH $PKG_CONFIG --exists libug; then
-	    HAVE_UG="1"
-        AC_MSG_RESULT(yes)
-	  else
-		HAVE_UG="0"
-        AC_MSG_RESULT(no)
-		AC_MSG_WARN([UG not found])
-      fi
-
-      ## check version number 
-      NEEDEDUG_VERSION=3.9.1-patch9
-
-      if test x$HAVE_UG = x1; then
-          
-          AC_MSG_CHECKING([whether UG version is recent enough])
-
-          # Does it have a suitable version?
-          if PKG_CONFIG_PATH=$PKG_CONFIG_PATH $PKG_CONFIG --atleast-version=$NEEDEDUG_VERSION libug; then
-              AC_MSG_RESULT(yes)
-          else
-              HAVE_UG="0"
-              AC_MSG_RESULT(no)
-              AC_MSG_WARN([UG version is too old (you need at least $NEEDEDUG_VERSION)])
-          fi
-          
-          # The following code is temporary: starting with UG-3.9.1-patch10,
-          # UG exposes some extra infrastructure for dynamic load-balancing.
-          # We only want to use it if people have patch10 installed.
-          if PKG_CONFIG_PATH=$PKG_CONFIG_PATH $PKG_CONFIG --atleast-version=3.9.1-patch10 libug; then
-              HAVE_UG_PATCH10="1"
-          else
-              HAVE_UG_PATCH10="0"
-              AC_MSG_WARN([Please consider updating to at least UG-3.9.1-patch10 (will be mandatory for dune-grid 2.4)])
-          fi
-      fi
-
-      # pre-set variable for summary
-      with_ug="no"
-   
-      if test x$HAVE_UG = x1; then
-
-        # Okay.  We have found a UG installation.  But has it been built with --enable-dune?
-        if test x$HAVE_UG = x1 ; then
-              
-          AC_MSG_CHECKING([whether UG has been built with --enable-dune])
-
-          if test x`PKG_CONFIG_PATH=$PKG_CONFIG_PATH $PKG_CONFIG --variable=fordune libug` == xyes; then
-              AC_MSG_RESULT(yes)
-          else
-              AC_MSG_RESULT(no)
-              AC_MSG_WARN([UG has not been built with --enable-dune!])
-              HAVE_UG="0"
-              with_ug="no"
-          fi
-            
-        fi
-        
-      fi
-
-      if test x$HAVE_UG = x1; then
-
-        # Set the compiler flags
-		UG_CPPFLAGS="`PKG_CONFIG_PATH=$PKG_CONFIG_PATH $PKG_CONFIG --cflags-only-I libug` -DENABLE_UG"
-        direct_UG_CPPFLAGS="`PKG_CONFIG_PATH=$PKG_CONFIG_PATH $PKG_CONFIG --cflags-only-I libug` -DENABLE_UG"
-
-          if test x`PKG_CONFIG_PATH=$PKG_CONFIG_PATH $PKG_CONFIG --variable=parallel libug` == xyes; then
-			
-          # Add additional flags needed for parallel UG  
-		  UG_LDFLAGS="\${DUNEMPILDFLAGS} $UG_LDFLAGS"
-          direct_UG_LDFLAGS="$DUNEMPILDFLAGS $direct_UG_LDFLAGS"
-          UG_CPPFLAGS="\${DUNEMPICPPFLAGS} $UG_CPPFLAGS -DModelP"
-          direct_UG_CPPFLAGS="$DUNEMPICPPFLAGS $direct_UG_CPPFLAGS -DModelP"
-          UG_LIBS="$UG_LIBS \${DUNEMPILIBS}"
-          direct_UG_LIBS="$direct_UG_LIBS $DUNEMPILIBS"
-          with_ug="yes (parallel)"
-		   
-		else
-			
-          with_ug="yes (sequential)"
-				   
-	    fi
-
-      fi
-
-      # restore PKG_CONFIG_PATH 
-      PKG_CONFIG_PATH=$REM_PKG_CONFIG_PATH
-  
-  # end of "no --without-ug"
-  fi
-
-  # did it work?
-  if test x$HAVE_UG = x0 ; then
-      # reset flags, so they do not appear in makefiles
-      UG_CPPFLAGS=""
-      direct_UG_CPPFLAGS=""
-      UG_LDFLAGS=""
-      direct_UG_LDFLAGS=""
-      UG_LIBS=""
-      direct_UG_LIBS=""
-  fi
-
-  AC_SUBST([UG_LDFLAGS])
-  AC_SUBST([UG_LIBS])
-  AC_SUBST([UG_CPPFLAGS])
-
-  # add to global list
-  DUNE_ADD_ALL_PKG([UG], [\${UG_CPPFLAGS}], [\${UG_LDFLAGS}], [\${UG_LIBS}])
-
-  if test x$HAVE_UG = x1 ; then
-
-      # add support for GRIDTYPE=UGGRID to config.h
-      DUNE_DEFINE_GRIDTYPE([UGGRID],[GRIDDIM == WORLDDIM],[Dune::UGGrid< dimgrid >],[dune/grid/uggrid.hh],[dune/grid/io/file/dgfparser/dgfug.hh])
-
-      AC_DEFINE(HAVE_UG, ENABLE_UG, 
-        [This is only true if UG was found by configure 
-         _and_ if the application uses the UG_CPPFLAGS])
-         
-      # Remove the following as soon as we absolutely require patch10 or higher
-      if test x$HAVE_UG_PATCH10 = x1 ; then
-      
-        AC_DEFINE(HAVE_UG_PATCH10, 1,
-            [Do we have UG in at least version 3.9.1-patch10?])
-            
-      fi
-
-  fi 
-      
-  # tell automake   
-  AM_CONDITIONAL(UG, test x$HAVE_UG = x1)
-  
-  # restore variables
-  LDFLAGS="$ac_save_LDFLAGS"
-  CPPFLAGS="$ac_save_CPPFLAGS"
-  LIBS="$ac_save_LIBS"
-
-  DUNE_ADD_SUMMARY_ENTRY([UG],[$with_ug])
-  
-])
-
-dnl -*- autoconf -*-
-# Macros needed to find dune-geometry and dependent libraries.  They are called by
-# the macros in ${top_src_dir}/dependencies.m4, which is generated by
-# "dunecontrol autogen"
-
-# Additional checks needed to build dune-geometry
-# This macro should be invoked by every module which depends on dune-geometry, as
-# well as by dune-geometry itself
-AC_DEFUN([DUNE_GEOMETRY_CHECKS], [
-])
-
-# Additional checks needed to find dune-geometry
-# This macro should be invoked by every module which depends on dune-geometry, but
-# not by dune-geometry itself
-AC_DEFUN([DUNE_GEOMETRY_CHECK_MODULE],
-[
-  AC_MSG_NOTICE([Searching for dune-geometry...])
-  DUNE_CHECK_MODULES([dune-geometry], [geometry/quadraturerules.hh],[dnl
-  Dune::GeometryType gt;
-  gt.makeQuadrilateral();
-  (Dune::QuadratureRules<double, 2>::rule(gt, 2).size());])
-])
-
-dnl @synopsis ACX_BLAS([ACTION-IF-FOUND[, ACTION-IF-NOT-FOUND]])
-dnl
-dnl This macro looks for a library that implements the BLAS
-dnl linear-algebra interface (see http://www.netlib.org/blas/). On
-dnl success, it sets the BLAS_LIBS output variable to hold the
-dnl requisite library linkages.
-dnl
-dnl To link with BLAS, you should link with:
-dnl
-dnl 	$BLAS_LIBS $LIBS $FLIBS
-dnl
-dnl in that order. FLIBS is the output variable of the
-dnl AC_F77_LIBRARY_LDFLAGS macro (called if necessary by ACX_BLAS), and
-dnl is sometimes necessary in order to link with F77 libraries. Users
-dnl will also need to use AC_F77_DUMMY_MAIN (see the autoconf manual),
-dnl for the same reason.
-dnl
-dnl Many libraries are searched for, from ATLAS to CXML to ESSL. The
-dnl user may also use --with-blas=<lib> in order to use some specific
-dnl BLAS library <lib>. In order to link successfully, however, be
-dnl aware that you will probably need to use the same Fortran compiler
-dnl (which can be set via the F77 env. var.) as was used to compile the
-dnl BLAS library.
-dnl
-dnl ACTION-IF-FOUND is a list of shell commands to run if a BLAS
-dnl library is found, and ACTION-IF-NOT-FOUND is a list of commands to
-dnl run it if it is not found. If ACTION-IF-FOUND is not specified, the
-dnl default action will define HAVE_BLAS.
-dnl
-dnl This macro requires autoconf 2.50 or later.
-dnl
-dnl @category InstalledPackages
-dnl @author Steven G. Johnson <stevenj@alum.mit.edu>
-dnl @version 2001-12-13
-dnl @license GPLWithACException
-
-AC_DEFUN([ACX_BLAS], [
-AC_PREREQ(2.50)
-AC_REQUIRE([AC_F77_LIBRARY_LDFLAGS])
-acx_blas_ok=no
-
-AC_ARG_WITH(blas,
-	[AC_HELP_STRING([--with-blas=<lib>], [use BLAS library <lib>])])
-case $with_blas in
-	yes | "") ;;
-	no) acx_blas_ok=disable ;;
-	-* | */* | *.a | *.so | *.so.* | *.o) BLAS_LIBS="$with_blas" ;;
-	*) BLAS_LIBS="-l$with_blas" ;;
-esac
-
-# Get fortran linker names of BLAS functions to check for.
-AC_F77_FUNC(sgemm)
-AC_F77_FUNC(dgemm)
-
-acx_blas_save_LIBS="$LIBS"
-LIBS="$LIBS $FLIBS"
-
-# First, check BLAS_LIBS environment variable
-if test $acx_blas_ok = no; then
-if test "x$BLAS_LIBS" != x; then
-	save_LIBS="$LIBS"; LIBS="$BLAS_LIBS $LIBS"
-	AC_MSG_CHECKING([for $sgemm in $BLAS_LIBS])
-	AC_LINK_IFELSE(
-        [AC_LANG_CALL([], $sgemm)],
-        [acx_blas_ok=yes],
-        [BLAS_LIBS=""])
-	AC_MSG_RESULT($acx_blas_ok)
-	LIBS="$save_LIBS"
-fi
-fi
-
-# BLAS linked to by default?  (happens on some supercomputers)
-if test $acx_blas_ok = no; then
-	save_LIBS="$LIBS"; LIBS="$LIBS"
-	AC_CHECK_FUNC($sgemm, [acx_blas_ok=yes])
-	LIBS="$save_LIBS"
-fi
-
-# BLAS in ATLAS library? (http://math-atlas.sourceforge.net/)
-if test $acx_blas_ok = no; then
-	AC_CHECK_LIB(atlas, ATL_xerbla,
-		[AC_CHECK_LIB(f77blas, $sgemm,
-		[AC_CHECK_LIB(cblas, cblas_dgemm,
-			[acx_blas_ok=yes
-			 BLAS_LIBS="-lcblas -lf77blas -latlas"],
-			[], [-lf77blas -latlas])],
-			[], [-latlas])])
-fi
-
-# BLAS in PhiPACK libraries? (requires generic BLAS lib, too)
-if test $acx_blas_ok = no; then
-	AC_CHECK_LIB(blas, $sgemm,
-		[AC_CHECK_LIB(dgemm, $dgemm,
-		[AC_CHECK_LIB(sgemm, $sgemm,
-			[acx_blas_ok=yes; BLAS_LIBS="-lsgemm -ldgemm -lblas"],
-			[], [-lblas])],
-			[], [-lblas])])
-fi
-
-# BLAS in Alpha CXML library?
-if test $acx_blas_ok = no; then
-	AC_CHECK_LIB(cxml, $sgemm, [acx_blas_ok=yes;BLAS_LIBS="-lcxml"])
-fi
-
-# BLAS in Alpha DXML library? (now called CXML, see above)
-if test $acx_blas_ok = no; then
-	AC_CHECK_LIB(dxml, $sgemm, [acx_blas_ok=yes;BLAS_LIBS="-ldxml"])
-fi
-
-# BLAS in Sun Performance library?
-if test $acx_blas_ok = no; then
-	if test "x$GCC" != xyes; then # only works with Sun CC
-		AC_CHECK_LIB(sunmath, acosp,
-			[AC_CHECK_LIB(sunperf, $sgemm,
-        			[BLAS_LIBS="-xlic_lib=sunperf -lsunmath"
-                                 acx_blas_ok=yes],[],[-lsunmath])])
-	fi
-fi
-
-# BLAS in SCSL library?  (SGI/Cray Scientific Library)
-if test $acx_blas_ok = no; then
-	AC_CHECK_LIB(scs, $sgemm, [acx_blas_ok=yes; BLAS_LIBS="-lscs"])
-fi
-
-# BLAS in SGIMATH library?
-if test $acx_blas_ok = no; then
-	AC_CHECK_LIB(complib.sgimath, $sgemm,
-		     [acx_blas_ok=yes; BLAS_LIBS="-lcomplib.sgimath"])
-fi
-
-# BLAS in IBM ESSL library? (requires generic BLAS lib, too)
-if test $acx_blas_ok = no; then
-	AC_CHECK_LIB(blas, $sgemm,
-		[AC_CHECK_LIB(essl, $sgemm,
-			[acx_blas_ok=yes; BLAS_LIBS="-lessl -lblas"],
-			[], [-lblas $FLIBS])])
-fi
-
-# Generic BLAS library?
-if test $acx_blas_ok = no; then
-	AC_CHECK_LIB(blas, $sgemm, [acx_blas_ok=yes; BLAS_LIBS="-lblas"])
-fi
-
-AC_SUBST(BLAS_LIBS)
-
-LIBS="$acx_blas_save_LIBS"
-
-# Finally, execute ACTION-IF-FOUND/ACTION-IF-NOT-FOUND:
-if test x"$acx_blas_ok" = xyes; then
-        ifelse([$1],,AC_DEFINE(HAVE_BLAS,1,[Define if you have a BLAS library.]),[$1])
-        :
-else
-        acx_blas_ok=no
-        $2
-fi
-])dnl ACX_BLAS
-
-dnl @synopsis ACX_LAPACK([ACTION-IF-FOUND[, ACTION-IF-NOT-FOUND]])
-dnl
-dnl This macro looks for a library that implements the LAPACK
-dnl linear-algebra interface (see http://www.netlib.org/lapack/). On
-dnl success, it sets the LAPACK_LIBS output variable to hold the
-dnl requisite library linkages.
-dnl
-dnl To link with LAPACK, you should link with:
-dnl
-dnl     $LAPACK_LIBS $BLAS_LIBS $LIBS $FLIBS
-dnl
-dnl in that order. BLAS_LIBS is the output variable of the ACX_BLAS
-dnl macro, called automatically. FLIBS is the output variable of the
-dnl AC_F77_LIBRARY_LDFLAGS macro (called if necessary by ACX_BLAS), and
-dnl is sometimes necessary in order to link with F77 libraries. Users
-dnl will also need to use AC_F77_DUMMY_MAIN (see the autoconf manual),
-dnl for the same reason.
-dnl
-dnl The user may also use --with-lapack=<lib> in order to use some
-dnl specific LAPACK library <lib>. In order to link successfully,
-dnl however, be aware that you will probably need to use the same
-dnl Fortran compiler (which can be set via the F77 env. var.) as was
-dnl used to compile the LAPACK and BLAS libraries.
-dnl
-dnl ACTION-IF-FOUND is a list of shell commands to run if a LAPACK
-dnl library is found, and ACTION-IF-NOT-FOUND is a list of commands to
-dnl run it if it is not found. If ACTION-IF-FOUND is not specified, the
-dnl default action will define HAVE_LAPACK.
-dnl
-dnl @category InstalledPackages
-dnl @author Steven G. Johnson <stevenj@alum.mit.edu>
-dnl @version 2002-03-12
-dnl @license GPLWithACException
-
-AC_DEFUN([ACX_LAPACK], [
-AC_REQUIRE([ACX_BLAS])
-acx_lapack_ok=no
-
-AC_ARG_WITH(lapack,
-        [AC_HELP_STRING([--with-lapack=<lib>], [use LAPACK library <lib>])])
-case $with_lapack in
-        yes | "") ;;
-        no) acx_lapack_ok=disable ;;
-        -* | */* | *.a | *.so | *.so.* | *.o) LAPACK_LIBS="$with_lapack" ;;
-        *) LAPACK_LIBS="-l$with_lapack" ;;
-esac
-
-# Get fortran linker name of LAPACK function to check for.
-AC_F77_FUNC(cheev)
-
-# We cannot use LAPACK if BLAS is not found
-if test "x$acx_blas_ok" != xyes; then
-        acx_lapack_ok=noblas
-fi
-
-# First, check LAPACK_LIBS environment variable
-if test "x$LAPACK_LIBS" != x; then
-        save_LIBS="$LIBS"; LIBS="$LAPACK_LIBS $BLAS_LIBS $LIBS $FLIBS"
-        AC_MSG_CHECKING([for $cheev in $LAPACK_LIBS])
-        AC_LINK_IFELSE(
-                [AC_LANG_CALL([], $cheev)],
-                [acx_lapack_ok=yes],
-                [LAPACK_LIBS=""])
-        AC_MSG_RESULT($acx_lapack_ok)
-        LIBS="$save_LIBS"
-        if test acx_lapack_ok = no; then
-                LAPACK_LIBS=""
-        fi
-fi
-
-# LAPACK linked to by default?  (is sometimes included in BLAS lib)
-if test $acx_lapack_ok = no; then
-        save_LIBS="$LIBS"; LIBS="$LIBS $BLAS_LIBS $FLIBS"
-        AC_CHECK_FUNC($cheev, [acx_lapack_ok=yes])
-        LIBS="$save_LIBS"
-fi
-
-# Generic LAPACK library?
-for lapack in lapack lapack_rs6k; do
-        if test $acx_lapack_ok = no; then
-                save_LIBS="$LIBS"; LIBS="$BLAS_LIBS $LIBS"
-                AC_CHECK_LIB($lapack, $cheev,
-                    [acx_lapack_ok=yes; LAPACK_LIBS="-l$lapack"], [], [$FLIBS])
-                LIBS="$save_LIBS"
-        fi
-done
-
-AC_SUBST(LAPACK_LIBS)
-
-# Finally, execute ACTION-IF-FOUND/ACTION-IF-NOT-FOUND:
-if test x"$acx_lapack_ok" = xyes; then
-        ifelse([$1],,AC_DEFINE(HAVE_LAPACK,1,[Define if you have LAPACK library.]),[$1])
-        :
-else
-        acx_lapack_ok=no
-        $2
-fi
-])dnl ACX_LAPACK
-
-dnl @synopsis ACX_MPI([ACTION-IF-FOUND[, ACTION-IF-NOT-FOUND]])
-dnl
-dnl This macro tries to find out how to compile programs that use MPI
-dnl (Message Passing Interface), a standard API for parallel process
-dnl communication (see http://www-unix.mcs.anl.gov/mpi/)
-dnl
-dnl On success, it sets the MPICC, MPICXX, or MPIF77 output variable to
-dnl the name of the MPI compiler, depending upon the current language.
-dnl (This may just be $CC/$CXX/$F77, but is more often something like
-dnl mpicc/mpiCC/mpif77.) It also sets MPILIBS to any libraries that are
-dnl needed for linking MPI (e.g. -lmpi, if a special
-dnl MPICC/MPICXX/MPIF77 was not found).
-dnl
-dnl If you want to compile everything with MPI, you should set:
-dnl
-dnl     CC="$MPICC" #OR# CXX="$MPICXX" #OR# F77="$MPIF77"
-dnl     LIBS="$MPILIBS $LIBS"
-dnl
-dnl The user can force a particular library/compiler by setting the
-dnl MPICC/MPICXX/MPIF77 and/or MPILIBS environment variables.
-dnl
-dnl ACTION-IF-FOUND is a list of shell commands to run if an MPI
-dnl library is found, and ACTION-IF-NOT-FOUND is a list of commands to
-dnl run it if it is not found. If ACTION-IF-FOUND is not specified, the
-dnl default action will define HAVE_MPI.
-dnl
-dnl @category InstalledPackages
-dnl @author Steven G. Johnson <stevenj@alum.mit.edu>
-dnl @version 2004-11-05
-dnl @license GPLWithACException
-
-AC_DEFUN([ACX_MPI], [
-AC_PREREQ(2.50) dnl for AC_LANG_CASE
-
-AC_LANG_CASE([C], [
-	AC_REQUIRE([AC_PROG_CC])
-	AC_ARG_VAR(MPICC,[MPI C compiler command])
-	AC_CHECK_PROGS(MPICC, mpicc hcc mpcc mpcc_r mpxlc cmpicc, $CC)
-	acx_mpi_save_CC="$CC"
-	LAMMPICC="$CC"
-	CC="$MPICC"
-	AC_SUBST(MPICC)
-],
-[C++], [
-	AC_REQUIRE([AC_PROG_CXX])
-	AC_ARG_VAR(MPICXX,[MPI C++ compiler command])
-	AC_CHECK_PROGS(MPICXX, mpic++ mpicxx mpiCC mpCC hcp mpxlC mpxlC_r cmpic++, $CXX)
-	acx_mpi_save_CXX="$CXX"
-	LAMMPICXX="$CXX"
-	CXX="$MPICXX"
-	AC_SUBST(MPICXX)
-],
-[Fortran 77], [
-	AC_REQUIRE([AC_PROG_F77])
-	AC_ARG_VAR(MPIF77,[MPI Fortran compiler command])
-	AC_CHECK_PROGS(MPIF77, mpif77 hf77 mpxlf mpf77 mpif90 mpf90 mpxlf90 mpxlf95 mpxlf_r cmpifc cmpif90c, $F77)
-	acx_mpi_save_F77="$F77"
-	LAMMPIF77="$F77"
-	F77="$MPIF77"
-	AC_SUBST(MPIF77)
-])
-
-if test x = x"$MPILIBS"; then
-	AC_LANG_CASE([C], [AC_CHECK_FUNC(MPI_Init, [MPILIBS=" "])],
-		[C++], [AC_CHECK_FUNC(MPI_Init, [MPILIBS=" "])],
-		[Fortran 77], [AC_MSG_CHECKING([for MPI_Init])
-        AC_LINK_IFELSE(
-              [AC_LANG_PROGRAM([], [[call MPI_Init]])],
-              [MPILIBS=" "
-                AC_MSG_RESULT(yes)],
-              [AC_MSG_RESULT(no)])])
-fi
-if test x = x"$MPILIBS"; then
-	AC_CHECK_LIB(mpi, MPI_Init, [MPILIBS="-lmpi"])
-fi
-if test x = x"$MPILIBS"; then
-	AC_CHECK_LIB(mpich, MPI_Init, [MPILIBS="-lmpich"])
-fi
-
-dnl We have to use AC_COMPILE_IFELSE and not AC_CHECK_HEADER because the
-dnl latter uses $CPP, not $CC (which may be mpicc).
-AC_LANG_CASE([C], [if test x != x"$MPILIBS"; then
-	AC_MSG_CHECKING([for mpi.h])
-	export LAMMPICC="$acx_mpi_save_CC"
-	AC_COMPILE_IFELSE([
-		AC_LANG_PROGRAM([[
-			#include <mpi.h>
-		]], [])],
-		AC_MSG_RESULT(yes),
-		[MPILIBS=""
-			AC_MSG_RESULT(no)])
-	unset LAMMPICC
-fi],
-[C++], [if test x != x"$MPILIBS"; then
-	AC_MSG_CHECKING([for mpi.h])
-	export LAMMPICXX="$acx_mpi_save_CXX"
-	AC_COMPILE_IFELSE([
-		AC_LANG_PROGRAM([[
-			#include <mpi.h>
-		]], [])],
-		AC_MSG_RESULT(yes),
-		[MPILIBS=""
-			AC_MSG_RESULT(no)])
-	unset LAMMPICXX
-fi])
-
-AC_LANG_CASE([C], [CC="$acx_mpi_save_CC"],
-	[C++], [CXX="$acx_mpi_save_CXX"],
-	[Fortran 77], [F77="$acx_mpi_save_F77"])
-
-AC_SUBST(MPILIBS)
-
-# Finally, execute ACTION-IF-FOUND/ACTION-IF-NOT-FOUND:
-if test x = x"$MPILIBS"; then
-        $2
-        :
-else
-        ifelse([$1],,[AC_DEFINE(HAVE_MPI,1,[Define if you have the MPI library.])],[$1])
-        :
-fi
-])dnl ACX_MPI
-
-dnl @synopsis ACX_PTHREAD([ACTION-IF-FOUND[, ACTION-IF-NOT-FOUND]])
-dnl
-dnl This macro figures out how to build C programs using POSIX threads.
-dnl It sets the PTHREAD_LIBS output variable to the threads library and
-dnl linker flags, and the PTHREAD_CFLAGS output variable to any special
-dnl C compiler flags that are needed. (The user can also force certain
-dnl compiler flags/libs to be tested by setting these environment
-dnl variables.)
-dnl
-dnl Also sets PTHREAD_CC to any special C compiler that is needed for
-dnl multi-threaded programs (defaults to the value of CC otherwise).
-dnl (This is necessary on AIX to use the special cc_r compiler alias.)
-dnl
-dnl NOTE: You are assumed to not only compile your program with these
-dnl flags, but also link it with them as well. e.g. you should link
-dnl with $PTHREAD_CC $CFLAGS $PTHREAD_CFLAGS $LDFLAGS ... $PTHREAD_LIBS
-dnl $LIBS
-dnl
-dnl If you are only building threads programs, you may wish to use
-dnl these variables in your default LIBS, CFLAGS, and CC:
-dnl
-dnl        LIBS="$PTHREAD_LIBS $LIBS"
-dnl        CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
-dnl        CC="$PTHREAD_CC"
-dnl
-dnl In addition, if the PTHREAD_CREATE_JOINABLE thread-attribute
-dnl constant has a nonstandard name, defines PTHREAD_CREATE_JOINABLE to
-dnl that name (e.g. PTHREAD_CREATE_UNDETACHED on AIX).
-dnl
-dnl ACTION-IF-FOUND is a list of shell commands to run if a threads
-dnl library is found, and ACTION-IF-NOT-FOUND is a list of commands to
-dnl run it if it is not found. If ACTION-IF-FOUND is not specified, the
-dnl default action will define HAVE_PTHREAD.
-dnl
-dnl Please let the authors know if this macro fails on any platform, or
-dnl if you have any other suggestions or comments. This macro was based
-dnl on work by SGJ on autoconf scripts for FFTW (www.fftw.org) (with
-dnl help from M. Frigo), as well as ac_pthread and hb_pthread macros
-dnl posted by Alejandro Forero Cuervo to the autoconf macro repository.
-dnl We are also grateful for the helpful feedback of numerous users.
-dnl
-dnl @category InstalledPackages
-dnl @author Steven G. Johnson <stevenj@alum.mit.edu>
-dnl @version 2005-01-14
-dnl @license GPLWithACException
-
-AC_DEFUN([ACX_PTHREAD], [
-AC_REQUIRE([AC_CANONICAL_HOST])
-AC_LANG_SAVE
-AC_LANG_C
-acx_pthread_ok=no
-
-# We used to check for pthread.h first, but this fails if pthread.h
-# requires special compiler flags (e.g. on True64 or Sequent).
-# It gets checked for in the link test anyway.
-
-# First of all, check if the user has set any of the PTHREAD_LIBS,
-# etcetera environment variables, and if threads linking works using
-# them:
-if test x"$PTHREAD_LIBS$PTHREAD_CFLAGS" != x; then
-        save_CFLAGS="$CFLAGS"
-        CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
-        save_LIBS="$LIBS"
-        LIBS="$PTHREAD_LIBS $LIBS"
-        AC_MSG_CHECKING([for pthread_join in LIBS=$PTHREAD_LIBS with CFLAGS=$PTHREAD_CFLAGS])
-        AC_LINK_IFELSE(
-                [AC_LANG_CALL([], [pthread_join])],
-                [acx_pthread_ok=yes],
-                [])
-        AC_MSG_RESULT($acx_pthread_ok)
-        if test x"$acx_pthread_ok" = xno; then
-                PTHREAD_LIBS=""
-                PTHREAD_CFLAGS=""
-        fi
-        LIBS="$save_LIBS"
-        CFLAGS="$save_CFLAGS"
-fi
-
-# We must check for the threads library under a number of different
-# names; the ordering is very important because some systems
-# (e.g. DEC) have both -lpthread and -lpthreads, where one of the
-# libraries is broken (non-POSIX).
-
-# Create a list of thread flags to try.  Items starting with a "-" are
-# C compiler flags, and other items are library names, except for "none"
-# which indicates that we try without any flags at all, and "pthread-config"
-# which is a program returning the flags for the Pth emulation library.
-
-acx_pthread_flags="pthreads none -Kthread -kthread lthread -pthread -pthreads -mthreads pthread --thread-safe -mt pthread-config"
-
-# The ordering *is* (sometimes) important.  Some notes on the
-# individual items follow:
-
-# pthreads: AIX (must check this before -lpthread)
-# none: in case threads are in libc; should be tried before -Kthread and
-#       other compiler flags to prevent continual compiler warnings
-# -Kthread: Sequent (threads in libc, but -Kthread needed for pthread.h)
-# -kthread: FreeBSD kernel threads (preferred to -pthread since SMP-able)
-# lthread: LinuxThreads port on FreeBSD (also preferred to -pthread)
-# -pthread: Linux/gcc (kernel threads), BSD/gcc (userland threads)
-# -pthreads: Solaris/gcc
-# -mthreads: Mingw32/gcc, Lynx/gcc
-# -mt: Sun Workshop C (may only link SunOS threads [-lthread], but it
-#      doesn't hurt to check since this sometimes defines pthreads too;
-#      also defines -D_REENTRANT)
-# pthread: Linux, etcetera
-# --thread-safe: KAI C++
-# pthread-config: use pthread-config program (for GNU Pth library)
-
-case "${host_cpu}-${host_os}" in
-        *solaris*)
-
-        # On Solaris (at least, for some versions), libc contains stubbed
-        # (non-functional) versions of the pthreads routines, so link-based
-        # tests will erroneously succeed.  (We need to link with -pthread or
-        # -lpthread.)  (The stubs are missing pthread_cleanup_push, or rather
-        # a function called by this macro, so we could check for that, but
-        # who knows whether they'll stub that too in a future libc.)  So,
-        # we'll just look for -pthreads and -lpthread first:
-
-        acx_pthread_flags="-pthread -pthreads pthread -mt $acx_pthread_flags"
-        ;;
-esac
-
-if test x"$acx_pthread_ok" = xno; then
-for flag in $acx_pthread_flags; do
-
-        case $flag in
-                none)
-                AC_MSG_CHECKING([whether pthreads work without any flags])
-                ;;
-
-                -*)
-                AC_MSG_CHECKING([whether pthreads work with $flag])
-                PTHREAD_CFLAGS="$flag"
-                ;;
-
-		pthread-config)
-		AC_CHECK_PROG(acx_pthread_config, pthread-config, yes, no)
-		if test x"$acx_pthread_config" = xno; then continue; fi
-		PTHREAD_CFLAGS="`pthread-config --cflags`"
-		PTHREAD_LIBS="`pthread-config --ldflags` `pthread-config --libs`"
-		;;
-
-                *)
-                AC_MSG_CHECKING([for the pthreads library -l$flag])
-                PTHREAD_LIBS="-l$flag"
-                ;;
-        esac
-
-        save_LIBS="$LIBS"
-        save_CFLAGS="$CFLAGS"
-        LIBS="$PTHREAD_LIBS $LIBS"
-        CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
-
-        # Check for various functions.  We must include pthread.h,
-        # since some functions may be macros.  (On the Sequent, we
-        # need a special flag -Kthread to make this header compile.)
-        # We check for pthread_join because it is in -lpthread on IRIX
-        # while pthread_create is in libc.  We check for pthread_attr_init
-        # due to DEC craziness with -lpthreads.  We check for
-        # pthread_cleanup_push because it is one of the few pthread
-        # functions on Solaris that doesn't have a non-functional libc stub.
-        # We try pthread_create on general principles.
-        AC_LINK_IFELSE(
-                [AC_LANG_PROGRAM(
-                        [[#include <pthread.h>]],
-                        [[pthread_t th; pthread_join(th, 0);
-                          pthread_attr_init(0); pthread_cleanup_push(0, 0);
-                          pthread_create(0,0,0,0); pthread_cleanup_pop(0);]])],
-                [acx_pthread_ok=yes],
-                [])
-
-        LIBS="$save_LIBS"
-        CFLAGS="$save_CFLAGS"
-
-        AC_MSG_RESULT($acx_pthread_ok)
-        if test "x$acx_pthread_ok" = xyes; then
-                break;
-        fi
-
-        PTHREAD_LIBS=""
-        PTHREAD_CFLAGS=""
-done
-fi
-
-# Various other checks:
-if test "x$acx_pthread_ok" = xyes; then
-        save_LIBS="$LIBS"
-        LIBS="$PTHREAD_LIBS $LIBS"
-        save_CFLAGS="$CFLAGS"
-        CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
-
-        # Detect AIX lossage: JOINABLE attribute is called UNDETACHED.
-	AC_MSG_CHECKING([for joinable pthread attribute])
-	attr_name=unknown
-	for attr in PTHREAD_CREATE_JOINABLE PTHREAD_CREATE_UNDETACHED; do
-        AC_LINK_IFELSE(
-            [AC_LANG_PROGRAM(
-                [[#include <pthread.h>]],
-                [[int attr=$attr;]])],
-            [attr_name=$attr; break],
-            [])
-	done
-        AC_MSG_RESULT($attr_name)
-        if test "$attr_name" != PTHREAD_CREATE_JOINABLE; then
-            AC_DEFINE_UNQUOTED(PTHREAD_CREATE_JOINABLE, $attr_name,
-                               [Define to necessary symbol if this constant
-                                uses a non-standard name on your system.])
-        fi
-
-        AC_MSG_CHECKING([if more special flags are required for pthreads])
-        flag=no
-        case "${host_cpu}-${host_os}" in
-            *-aix* | *-freebsd* | *-darwin*) flag="-D_THREAD_SAFE";;
-            *solaris* | *-osf* | *-hpux*) flag="-D_REENTRANT";;
-        esac
-        AC_MSG_RESULT(${flag})
-        if test "x$flag" != xno; then
-            PTHREAD_CFLAGS="$flag $PTHREAD_CFLAGS"
-        fi
-
-        LIBS="$save_LIBS"
-        CFLAGS="$save_CFLAGS"
-
-        # More AIX lossage: must compile with cc_r
-        AC_CHECK_PROG(PTHREAD_CC, cc_r, cc_r, ${CC})
-else
-        PTHREAD_CC="$CC"
-fi
-
-AC_SUBST(PTHREAD_LIBS)
-AC_SUBST(PTHREAD_CFLAGS)
-AC_SUBST(PTHREAD_CC)
-
-# Finally, execute ACTION-IF-FOUND/ACTION-IF-NOT-FOUND:
-if test x"$acx_pthread_ok" = xyes; then
-        ifelse([$1],,AC_DEFINE(HAVE_PTHREAD,1,[Define if you have POSIX threads libraries and header files.]),[$1])
-        :
-else
-        acx_pthread_ok=no
-        $2
-fi
-AC_LANG_RESTORE
-])dnl ACX_PTHREAD
-
 # ===========================================================================
 #       http://www.gnu.org/software/autoconf-archive/ax_boost_base.html
 # ===========================================================================
@@ -12933,6 +12387,29 @@ AC_DEFUN([INITIALIZER_LIST_CHECK],[
   if test "x$dune_cv_initializer_list_support" = xyes; then
     AC_DEFINE(HAVE_INITIALIZER_LIST, 1, [Define to 1 if std::initializer_list is supported])
   fi
+])
+
+dnl -*- autoconf -*-
+# Macros needed to find dune-geometry and dependent libraries.  They are called by
+# the macros in ${top_src_dir}/dependencies.m4, which is generated by
+# "dunecontrol autogen"
+
+# Additional checks needed to build dune-geometry
+# This macro should be invoked by every module which depends on dune-geometry, as
+# well as by dune-geometry itself
+AC_DEFUN([DUNE_GEOMETRY_CHECKS], [
+])
+
+# Additional checks needed to find dune-geometry
+# This macro should be invoked by every module which depends on dune-geometry, but
+# not by dune-geometry itself
+AC_DEFUN([DUNE_GEOMETRY_CHECK_MODULE],
+[
+  AC_MSG_NOTICE([Searching for dune-geometry...])
+  DUNE_CHECK_MODULES([dune-geometry], [geometry/quadraturerules.hh],[dnl
+  Dune::GeometryType gt;
+  gt.makeQuadrilateral();
+  (Dune::QuadratureRules<double, 2>::rule(gt, 2).size());])
 ])
 
 dnl -*- autoconf -*-
@@ -14012,6 +13489,18 @@ AC_DEFUN([DUNE_WEB],
   AM_CONDITIONAL(DUNEWEB, [test "x$with_duneweb" != "xno"])
 ])
 
+dnl This macro introduces a configure flag --enable-experimental-grid-extensions
+dnl that is used to publicly grant access to the implementation of the dune-grid
+dnl facades (e.g., Entity, Geometry, etc.).
+
+AC_DEFUN([DUNE_EXPERIMENTAL_GRID_EXTENSIONS],[
+  AC_ARG_ENABLE(experimental-grid-extensions,
+    AS_HELP_STRING([--enable-experimental-grid-extensions],[If this is set, public access to the implementation of facades like Entity, Geometry, etc. is granted.]))
+
+  AS_IF([test "x$enable_experimental_grid_extensions" = "xyes"],
+    AC_DEFINE(DUNE_GRID_EXPERIMENTAL_GRID_EXTENSIONS, 1, [If this is set, public access to the implementation of facades like Entity, Geometry, etc. is granted.]))
+])
+
 # a trick to make life for the  user easier.
 #
 # some libs need the fortran test, while other use the f77 test. This
@@ -14043,6 +13532,99 @@ AC_DEFUN([DUNE_SYNC_FC_F77],[
   ])
 ])
 
+
+AC_DEFUN([DUNE_GRID_CHECKS],[
+  AC_REQUIRE([DUNE_GRID_DIMENSION])
+  AC_REQUIRE([DUNE_PATH_GRAPE])
+  AC_REQUIRE([DUNE_PATH_ALBERTA])
+  AC_REQUIRE([DUNE_PATH_UG])
+  AC_REQUIRE([DUNE_PATH_AMIRAMESH])
+  AC_REQUIRE([DUNE_PATH_PSURFACE])
+  AC_REQUIRE([DUNE_PATH_ALUGRID])
+  AC_REQUIRE([DUNE_EXPERIMENTAL_GRID_EXTENSIONS])
+
+  DUNE_DEFINE_GRIDTYPE([ONEDGRID],[(GRIDDIM == 1) && (WORLDDIM == 1)],[Dune::OneDGrid],[dune/grid/onedgrid.hh],[dune/grid/io/file/dgfparser/dgfoned.hh])
+  DUNE_DEFINE_GRIDTYPE([SGRID],[],[Dune::SGrid< dimgrid, dimworld >],[dune/grid/sgrid.hh],[dune/grid/io/file/dgfparser/dgfs.hh])
+  DUNE_DEFINE_GRIDTYPE([YASPGRID],[GRIDDIM == WORLDDIM],[Dune::YaspGrid< dimgrid >],[dune/grid/yaspgrid.hh],[dune/grid/io/file/dgfparser/dgfyasp.hh])
+])
+
+AC_DEFUN([DUNE_GRID_CHECK_MODULE],[
+  DUNE_CHECK_MODULES([dune-grid], [grid/onedgrid.hh],[dnl
+  std::vector<Dune::OneDGrid::ctype> coords;
+  Dune::OneDGrid grid(coords);
+  return grid.lbegin<0>(0) == grid.lend<0>(0);])
+])
+
+# define GRIDDIM_CPPFLAGS and add to DUNE_PKG_CPPFLAGS
+# This defines GRIDDIM, WORLDDIM, and GRIDTYPE and assigns invalid values 
+AC_DEFUN([DUNE_GRID_DIMENSION],[
+  griddim_cppflags="-DGRIDDIM=$``(``GRIDDIM``)`` -DWORLDDIM=$``(``WORLDDIM``)`` -D$``(``GRIDTYPE``)``"
+  AC_SUBST(GRIDDIM, 0)
+  AC_SUBST(WORLDDIM, "$``(``GRIDDIM``)``")
+
+  AC_SUBST(GRIDTYPE, [NOGRID])
+  AC_SUBST(GRIDDIM_CPPFLAGS, $griddim_cppflags)
+  DUNE_ADD_ALL_PKG([GRIDDIM], [$griddim_cppflags])
+  # AC_MSG_RESULT([yes (GRIDDIM=$GRIDDIM, WORLDDIM=GRIDDIM and GRIDTYPE=$GRIDTYPE)])
+])
+
+AC_DEFUN([DUNE_DEFINE_GRIDTYPE_INCLUDE],[dnl
+m4_if($#,0,[],[dnl
+  #include <$1>
+m4_if($#,1,[],[DUNE_DEFINE_GRIDTYPE_INCLUDE(m4_shift($@))])dnl
+])dnl
+])
+
+
+# DUNE_DEFINE_GRIDTYPE([GRIDTYPE],[ASSERTION],[DUNETYPE],[HEADER],...)
+#
+# Add a new GRIDTYPE target to DUNE's preprocessor magic.
+# 
+# Parameters: GRIDTYPE   name of the new target
+#             ASSERTION  condition to be checked by the preprocessor
+#             DUNETYPE   C++ type of the grid
+#             HEADER     name of the header file which includes the grid
+#
+# Example: DUNE_DEFINE_GRIDTYPE([YASPGRID],[GRIDDIM == WORLDDIM],[Dune::YaspGrid< dimgrid >],[dune/grid/yaspgrid.hh],[dune/grid/io/file/dgfparser/dgfyasp.hh])
+AC_DEFUN([DUNE_DEFINE_GRIDTYPE],[AH_BOTTOM(dnl
+[/* add GRIDTYPE typedef for grid implementation $3:
+    defining $1 during compilation typedefs this grid implementation as GridType
+    in namespace Dune::GridSelector;
+    also integer constants dimgrid and dimworld are set in this namespace.
+    The required headers for this grid implementation are also included.
+  */
+ #if HAVE_DUNE_GRID && defined $1 && ! defined USED_$1_GRIDTYPE
+  #if HAVE_GRIDTYPE
+   #error "Ambiguous definition of GRIDTYPE."
+  #endif 
+
+  #ifndef WORLDDIM
+    #define WORLDDIM GRIDDIM
+  #endif
+  #if not (WORLDDIM >= GRIDDIM)
+    #error "WORLDDIM < GRIDDIM does not make sense."
+  #endif
+]dnl
+m4_if([$2],[],[],[
+  #if ! ($2)
+    #error "Preprocessor assertion $2 failed."
+  #endif
+])
+DUNE_DEFINE_GRIDTYPE_INCLUDE(m4_shift(m4_shift(m4_shift($@))))dnl
+[
+  namespace Dune
+  {
+    namespace GridSelector
+    {
+      const int dimgrid = GRIDDIM;
+      const int dimworld = WORLDDIM;
+      typedef $3 GridType;
+    }
+  }
+  #define HAVE_GRIDTYPE 1
+  #define USED_$1_GRIDTYPE 1
+#endif // #if HAVE_DUNE_GRID && defined $1 && ..]dnl
+)])
 
 # $Id$
 # tries to link c++ objects
@@ -14559,6 +14141,123 @@ AC_DEFUN([DUNE_CHECK_PATH_GMP],[
 ])
 
 
+# $Id: grape.m4 5710 2009-11-13 17:09:45Z robertk $
+# searches for albert-headers and libs
+
+# grape.h und libgr.a/libgr.so are located in the same discretory 
+
+# DUNE_PATH_GRAPE()
+#
+# configure shell/makefile variables:
+#   GRAPE_CPPFLAGS
+#   GRAPE_LDFLAGS
+#   GRAPE_LIBS
+#
+# preprocessor defines:
+#   HAVE_GRAPE ("ENABLE_GRAPE" or undefined)
+#
+# automake conditionals:
+#   GRAPE
+AC_DEFUN([DUNE_PATH_GRAPE],[
+  AC_REQUIRE([AC_PROG_CC])
+  AC_REQUIRE([AC_PATH_XTRA])
+  AC_REQUIRE([DUNE_PATH_OPENGL])
+  AC_REQUIRE([AC_PROG_LD_GNU])
+
+  AC_ARG_WITH(grape,
+    AC_HELP_STRING([--with-grape=PATH],[directory with Grape inside]))
+
+# store old values
+ac_save_LDFLAGS="$LDFLAGS"
+ac_save_CPPFLAGS="$CPPFLAGS"
+ac_save_LIBS="$LIBS"
+
+# don't even start testing if X wasn't found
+if test "x$no_x" != xyes && test x$with_grape != xno ; then
+
+  LIBS="$X_PRE_LIBS $X_LIBS $X_EXTRA_LIBS"
+
+  # is --with-grape=bla used?
+  if test x$with_grape != x ; then
+    if test -d $with_grape; then
+      # expand tilde / other stuff
+      GRAPEROOT=`cd $with_grape && pwd`
+    else
+      AC_MSG_ERROR([directory $with_grape does not exist])
+    fi      
+  else
+    # set some kind of default grape-path...
+    GRAPEROOT="/usr/local/grape/"
+  fi
+
+  CPPFLAGS="$CPPFLAGS -I$GRAPEROOT"
+  LDFLAGS="$LDFLAGS -L$GRAPEROOT"
+
+  # check for header
+  # we have to use CC for checking the header!!
+  AC_LANG_PUSH([C])
+  AC_CHECK_HEADER([grape.h],
+    [GRAPE_CPPFLAGS="-I$GRAPEROOT"
+     HAVE_GRAPE="1"])
+  AC_LANG_POP
+
+  # check for lib if header was found
+  if test x$HAVE_GRAPE = x1 ; then
+    # if GL was found, add it implicitly...
+    #   This is not the best choice, but testing without GL first and
+    #   then trying again fails due to caching...
+    CPPFLAGS="$GRAPE_CPPFLAGS $GL_CFLAGS -DENABLE_GRAPE"
+    LIBS="$LIBS $GL_LIBS -lXext"
+    LDFLAGS="$LDFLAGS $GL_LDFLAGS"
+
+    # if we use the gnu linker add the grape path 
+    if test x$lt_cv_prog_gnu_ld = xyes ; then 
+      GRAPE_LINKER_FLAGS="-Wl,--rpath -Wl,$GRAPEROOT"
+    fi  
+
+    AC_CHECK_LIB(gr, grape, 
+      [GRAPE_LDFLAGS="$GL_LDFLAGS $GRAPE_LINKER_FLAGS"
+       GRAPE_CPPFLAGS="$CPPFLAGS"
+       GRAPE_LIBS="-L$GRAPEROOT -lgr $GL_LIBS -lXext"], 
+      [HAVE_GRAPE="0"])
+  fi
+
+  # did it work?
+  if test x$HAVE_GRAPE = x1 ; then
+    AC_SUBST(GRAPE_LIBS, $GRAPE_LIBS)
+    AC_SUBST(GRAPE_LDFLAGS, $GRAPE_LDFLAGS)
+    AC_SUBST(GRAPE_CPPFLAGS, $GRAPE_CPPFLAGS)
+    AC_DEFINE(HAVE_GRAPE, ENABLE_GRAPE,
+          [This is only true if grape-library was found by configure 
+           _and_ if the application uses the GRAPE_CPPFLAGS])
+
+    # add to global list
+    DUNE_ADD_ALL_PKG([GRAPE], [$GRAPE_CPPFLAGS], [$GRAPE_LDFLAGS], [$GRAPE_LIBS])
+  fi
+elif test "x$X_LIBS" = x ; then 
+  AC_MSG_WARN([X libraries were not found and therefore not Grape check possible! See ./configure --help for X library options.])
+fi
+
+
+# report to summary
+if test x$HAVE_GRAPE = x1 ; then
+  with_grape="yes"
+else
+  with_grape="no"
+fi
+
+# also tell automake	
+AM_CONDITIONAL(GRAPE, test x$HAVE_GRAPE = x1)
+
+# reset old values
+LIBS="$ac_save_LIBS"
+CPPFLAGS="$ac_save_CPPFLAGS"
+LDFLAGS="$ac_save_LDFLAGS"
+  
+DUNE_ADD_SUMMARY_ENTRY([Grape],[$with_grape])
+
+])
+
 # $Id$
 
 # Check for inkscape and define automake conditional
@@ -15020,6 +14719,191 @@ dnl use test from autoconf-archive
   DUNE_ADD_SUMMARY_ENTRY([OpenGL],[$with_opengl])
 ])
 
+# searches for psurface-headers and lib
+
+# DUNE_PATH_PSURFACE()
+#
+# DUNE_PATH_AMIRAMESH must be called previously if psurface was built with
+# AmiraMesh support
+#
+# shell variables:
+#   with_psurface
+#     yes or no
+#   PSURFACEROOT
+#   PSURFACE_LIB_PATH
+#   PSURFACE_INCLUDE_PATH
+#   PSURFACE_CPPFLAGS
+#   PSURFACE_LDFLAGS
+#   PSURFACE_LIBS
+#   HAVE_PSURFACE
+#     0 or 1
+#
+# substitutions:
+#   PSURFACE_LIBS
+#   PSURFACE_LDFLAGS
+#   PSURFACE_CPPFLAGS
+#
+# defines:
+#   HAVE_PSURFACE
+#
+# conditionals:
+#   PSURFACE
+AC_DEFUN([DUNE_PATH_PSURFACE],[
+  AC_REQUIRE([AC_PROG_CXX])
+  AC_REQUIRE([DUNE_PATH_AMIRAMESH])
+
+  AC_ARG_WITH(psurface,
+    AC_HELP_STRING([--with-psurface=PATH],[directory with the psurface library inside]))
+
+# store values
+ac_save_LDFLAGS="$LDFLAGS"
+ac_save_CPPFLAGS="$CPPFLAGS"
+ac_save_LIBS="$LIBS"
+ac_save_PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
+
+# initialize to sane value
+HAVE_PSURFACE=0
+
+if test x$with_psurface != xno ; then
+
+# is --with-psurface=bla used?
+if test "x$with_psurface" != x ; then
+    if test -d $with_psurface; then
+      # expand tilde / other stuff
+      PSURFACEROOT=`cd $with_psurface && pwd`
+    else
+      AC_MSG_ERROR([directory $with_psurface does not exist])
+    fi
+fi
+if test "x$PSURFACEROOT" = x; then  
+    # use some default value...
+    PSURFACEROOT="/usr/local/psurface"
+fi
+
+    # Check for psurface using pkg-config
+    # This works for psurface-2.0 and later
+    export PKG_CONFIG_PATH="$PSURFACEROOT/lib/pkgconfig:$PSURFACEROOT/lib64/pkgconfig:$PKG_CONFIG_PATH"
+    PKG_CHECK_MODULES([PSURFACE], [psurface], [
+        HAVE_PSURFACE="1"
+        AC_DEFINE(PSURFACE_NAMESPACE,
+                  psurface::,
+                  [The namespace prefix of the psurface library])
+        AC_DEFINE(HAVE_PSURFACE_2_0,
+                  1,
+                  [If set we have at least psurface version 2.0])
+        AC_MSG_RESULT([yes (by pkg-config)])
+    ], [
+        AC_MSG_WARN([PSurface >= 2.0 not found in $PSURFACEROOT])
+    ])
+
+    # PKG_CHECK_MODULES puts the stuff we would expect in PSURFACE_CPPFLAGS
+    # (namely, -I<path>) in PSURFACE_CFLAGS. We therefore copy it by hand.
+    PSURFACE_CPPFLAGS="$PSURFACE_CFLAGS"
+
+# If pkg-config didn't find psurface we may be dealing with an older version
+# of psurface (without pkg-config support).  We try to find that without pkg-config.
+if test x$HAVE_PSURFACE != x1 ; then
+PSURFACE_INCLUDE_PATH="$PSURFACEROOT/include"
+PSURFACE_LIB_PATH="$PSURFACEROOT/lib"
+AS_IF([test -d $PSURFACE_LIB_PATH],
+  [],
+  [PSURFACE_LIB_PATH="$PSURFACEROOT/lib64"])
+
+CPPFLAGS="$CPPFLAGS -I$PSURFACE_INCLUDE_PATH"
+
+AC_LANG_PUSH([C++])
+
+# check for header
+AC_CHECK_HEADER([psurface/PSurface.h], 
+   [PSURFACE_CPPFLAGS="-I$PSURFACE_INCLUDE_PATH"
+	HAVE_PSURFACE="1"],
+   [if test "x$with_psurface" != x ; then
+    AC_MSG_WARN([psurface/PSurface.h not found in $PSURFACE_INCLUDE_PATH])
+    fi
+   ])
+
+CPPFLAGS="$CPPFLAGS $PSURFACE_CPPFLAGS"
+
+# if header is found...
+if test x$HAVE_PSURFACE = x1 ; then
+   AC_MSG_CHECKING([psurface library -lpsurface])
+
+   # Why are the $AMIRAMESH_LDFLAGS $AMIRAMESH_LIBS here?
+   # OS: This is a hack.  psurface can be compiled with and without AmiraMesh
+   # support.  If it is compiled with AmiraMesh support, then it needs these flags
+   # for the test to link (and since these flags must be set properly the AmiraMesh
+   # test must have been called successfully before).  If psurface is compiled
+   # without AmiraMesh support than the additional flags here do not matter.
+   LIBS="-L$PSURFACE_LIB_PATH -lpsurface $AMIRAMESH_LIBS $LIBS"
+   LDFLAGS="$LDFLAGS $AMIRAMESH_LDFLAGS"
+
+   # Try to link to the library (for libpsurface-1.3 and newer)
+   AC_LINK_IFELSE([AC_LANG_PROGRAM([#include "psurface/PSurface.h"], [[psurface::PSurface<2,double> foo;]])],
+	[PSURFACE_LIBS="-L$PSURFACE_LIB_PATH -lpsurface"
+         PSURFACE_LDFLAGS=""
+         AC_DEFINE(PSURFACE_NAMESPACE, 
+                   psurface::,
+                   [The namespace prefix of the psurface library])
+         AC_MSG_RESULT([yes (1.3 or newer)])],
+	[HAVE_PSURFACE="0"])
+
+   if test x$HAVE_PSURFACE = x0 ; then
+
+       # Try to link to the library (for libpsurface-1.2 and older)
+       AC_LINK_IFELSE([AC_LANG_PROGRAM([#include "psurface/PSurface.h"], [[PSurface<2,double> foo;]])],
+            [PSURFACE_LIBS="-L$PSURFACE_LIB_PATH -lpsurface"
+             PSURFACE_LDFLAGS=""
+             HAVE_PSURFACE="1"
+             AC_DEFINE(PSURFACE_NAMESPACE, 
+                       [],
+                       [The namespace prefix of the psurface library])
+             AC_MSG_RESULT([yes (1.2 or older)])],
+            [HAVE_PSURFACE="0"
+             AC_MSG_RESULT(no)
+             AC_MSG_WARN([psurface header found, but libpsurface missing!])])
+    fi
+
+fi
+
+AC_LANG_POP([C++])
+
+fi
+
+fi
+
+with_psurface="no"
+# survived all tests?
+if test x$HAVE_PSURFACE = x1 ; then
+  AC_SUBST(PSURFACE_LIBS, $PSURFACE_LIBS)
+  AC_SUBST(PSURFACE_LDFLAGS, $PSURFACE_LDFLAGS)
+  AC_SUBST(PSURFACE_CPPFLAGS, $PSURFACE_CPPFLAGS)
+  AC_DEFINE(HAVE_PSURFACE, 1, [Define to 1 if psurface-library is found])
+
+  # add to global list
+  DUNE_ADD_ALL_PKG([psurface], [$PSURFACE_CPPFLAGS],
+                   [$PSURFACE_LDFLAGS], [$PSURFACE_LIBS])
+
+  # set variable for summary
+  with_psurface="yes"
+else
+  AC_SUBST(PSURFACE_LIBS, "")
+  AC_SUBST(PSURFACE_LDFLAGS, "")
+  AC_SUBST(PSURFACE_CPPFLAGS, "")
+fi
+
+# also tell automake
+AM_CONDITIONAL(PSURFACE, test x$HAVE_PSURFACE = x1)
+
+# reset old values
+LIBS="$ac_save_LIBS"
+CPPFLAGS="$ac_save_CPPFLAGS"
+LDFLAGS="$ac_save_LDFLAGS"
+PKG_CONFIG_PATH="$ac_save_PKG_CONFIG_PATH"
+
+DUNE_ADD_SUMMARY_ENTRY([psurface],[$with_psurface])
+
+])
+
 dnl  Copyright (C) 2009 Sun Microsystems
 dnl This file is free software; Sun Microsystems
 dnl gives unlimited permission to copy and/or distribute it,
@@ -15109,6 +14993,218 @@ shared_ptr<string> test_ptr(new string("test string"));
     ]
   )
   AC_LANG_POP()
+])
+
+# $Id: ug.m4 5156 2008-04-14 09:28:06Z christi $
+# searches for UG headers and libs
+
+# DUNE_PATH_UG()
+#
+# configure shell variables:
+#   UGROOT
+#   UG_CPPFLAGS, UG_LDFLAGS, UG_LIBS
+#       flags and libs with indirect references for the makefiles, for
+#       instance the literal string '${DUNEMPICPPFLAGS}
+#   direct_UG_CPPFLAGS, direct_UG_LDFLAGS, direct_UG_LIBS
+#       flags and libs with direct values for use in configure, for instance
+#       the value of DUNEMPICPPFLAGS
+#   HAVE_UG
+#       1 or 0 or undefined
+#   with_ug
+#       "no" or "yes" with stuff appended
+#
+# configure substitutions/makefile variables:
+#   UG_CPPFLAGS
+#   UG_LDFLAGS
+#   UG_LIBS
+#
+# preprocessor defines:
+#   HAVE_UG
+#     undefined or ENABLE_UG
+#
+# automake conditionals:
+#   UG
+AC_DEFUN([DUNE_PATH_UG],[
+  AC_REQUIRE([AC_PROG_CC])
+  AC_REQUIRE([AC_PATH_XTRA])
+  AC_REQUIRE([DUNE_MPI])
+
+  AC_ARG_WITH(ug,
+    AC_HELP_STRING([--with-ug=PATH],[directory where UG is installed]))
+
+  # store old values
+  ac_save_LDFLAGS="$LDFLAGS"
+  ac_save_CPPFLAGS="$CPPFLAGS"
+  ac_save_LIBS="$LIBS"
+  
+  # initialize
+  HAVE_UG=0
+
+  ## do nothing if --without-ug is used
+  if test x$with_ug != xno ; then
+      
+      # is --with-ug=bla used?
+      if test "x$with_ug" != x ; then
+          if ! test -d $with_ug; then
+              AC_MSG_WARN([UG directory $with_ug does not exist!])
+          else
+              # expand tilde / other stuff
+              UGROOT=`cd $with_ug && pwd`
+          fi
+      fi
+
+      # If an explicit path has been provided it needs to be appended
+      # temporarily to PKG_CONFIG_PATH
+      REM_PKG_CONFIG_PATH=$PKG_CONFIG_PATH
+      # The first additional path is for uninstalled UG, the second one for the installed UG
+	  UGLIBPKCONFIG=`echo $UGROOT/lib*/pkgconfig | sed -e 's/\s\+/:/g'`
+      PKG_CONFIG_PATH="$UGROOT:$UGLIBPKCONFIG:$PKG_CONFIG_PATH"
+
+      UG_LDFLAGS=""
+
+      UG_LIBS="`PKG_CONFIG_PATH=$PKG_CONFIG_PATH $PKG_CONFIG --libs-only-L libug` -lugS2 -lugS3 -ldevS"
+      direct_UG_LIBS="`PKG_CONFIG_PATH=$PKG_CONFIG_PATH $PKG_CONFIG --libs-only-L libug` -lugS2 -lugS3 -ldevS"
+      
+      AC_MSG_CHECKING([for UG])
+
+      # Check whether UG is installed at all
+      if PKG_CONFIG_PATH=$PKG_CONFIG_PATH $PKG_CONFIG --exists libug; then
+	    HAVE_UG="1"
+        AC_MSG_RESULT(yes)
+	  else
+		HAVE_UG="0"
+        AC_MSG_RESULT(no)
+		AC_MSG_WARN([UG not found])
+      fi
+
+      ## check version number 
+      NEEDEDUG_VERSION=3.9.1-patch9
+
+      if test x$HAVE_UG = x1; then
+          
+          AC_MSG_CHECKING([whether UG version is recent enough])
+
+          # Does it have a suitable version?
+          if PKG_CONFIG_PATH=$PKG_CONFIG_PATH $PKG_CONFIG --atleast-version=$NEEDEDUG_VERSION libug; then
+              AC_MSG_RESULT(yes)
+          else
+              HAVE_UG="0"
+              AC_MSG_RESULT(no)
+              AC_MSG_WARN([UG version is too old (you need at least $NEEDEDUG_VERSION)])
+          fi
+          
+          # The following code is temporary: starting with UG-3.9.1-patch10,
+          # UG exposes some extra infrastructure for dynamic load-balancing.
+          # We only want to use it if people have patch10 installed.
+          if PKG_CONFIG_PATH=$PKG_CONFIG_PATH $PKG_CONFIG --atleast-version=3.9.1-patch10 libug; then
+              HAVE_UG_PATCH10="1"
+          else
+              HAVE_UG_PATCH10="0"
+              AC_MSG_WARN([Please consider updating to at least UG-3.9.1-patch10 (will be mandatory for dune-grid 2.4)])
+          fi
+      fi
+
+      # pre-set variable for summary
+      with_ug="no"
+   
+      if test x$HAVE_UG = x1; then
+
+        # Okay.  We have found a UG installation.  But has it been built with --enable-dune?
+        if test x$HAVE_UG = x1 ; then
+              
+          AC_MSG_CHECKING([whether UG has been built with --enable-dune])
+
+          if test x`PKG_CONFIG_PATH=$PKG_CONFIG_PATH $PKG_CONFIG --variable=fordune libug` == xyes; then
+              AC_MSG_RESULT(yes)
+          else
+              AC_MSG_RESULT(no)
+              AC_MSG_WARN([UG has not been built with --enable-dune!])
+              HAVE_UG="0"
+              with_ug="no"
+          fi
+            
+        fi
+        
+      fi
+
+      if test x$HAVE_UG = x1; then
+
+        # Set the compiler flags
+		UG_CPPFLAGS="`PKG_CONFIG_PATH=$PKG_CONFIG_PATH $PKG_CONFIG --cflags-only-I libug` -DENABLE_UG"
+        direct_UG_CPPFLAGS="`PKG_CONFIG_PATH=$PKG_CONFIG_PATH $PKG_CONFIG --cflags-only-I libug` -DENABLE_UG"
+
+          if test x`PKG_CONFIG_PATH=$PKG_CONFIG_PATH $PKG_CONFIG --variable=parallel libug` == xyes; then
+			
+          # Add additional flags needed for parallel UG  
+		  UG_LDFLAGS="\${DUNEMPILDFLAGS} $UG_LDFLAGS"
+          direct_UG_LDFLAGS="$DUNEMPILDFLAGS $direct_UG_LDFLAGS"
+          UG_CPPFLAGS="\${DUNEMPICPPFLAGS} $UG_CPPFLAGS -DModelP"
+          direct_UG_CPPFLAGS="$DUNEMPICPPFLAGS $direct_UG_CPPFLAGS -DModelP"
+          UG_LIBS="$UG_LIBS \${DUNEMPILIBS}"
+          direct_UG_LIBS="$direct_UG_LIBS $DUNEMPILIBS"
+          with_ug="yes (parallel)"
+		   
+		else
+			
+          with_ug="yes (sequential)"
+				   
+	    fi
+
+      fi
+
+      # restore PKG_CONFIG_PATH 
+      PKG_CONFIG_PATH=$REM_PKG_CONFIG_PATH
+  
+  # end of "no --without-ug"
+  fi
+
+  # did it work?
+  if test x$HAVE_UG = x0 ; then
+      # reset flags, so they do not appear in makefiles
+      UG_CPPFLAGS=""
+      direct_UG_CPPFLAGS=""
+      UG_LDFLAGS=""
+      direct_UG_LDFLAGS=""
+      UG_LIBS=""
+      direct_UG_LIBS=""
+  fi
+
+  AC_SUBST([UG_LDFLAGS])
+  AC_SUBST([UG_LIBS])
+  AC_SUBST([UG_CPPFLAGS])
+
+  # add to global list
+  DUNE_ADD_ALL_PKG([UG], [\${UG_CPPFLAGS}], [\${UG_LDFLAGS}], [\${UG_LIBS}])
+
+  if test x$HAVE_UG = x1 ; then
+
+      # add support for GRIDTYPE=UGGRID to config.h
+      DUNE_DEFINE_GRIDTYPE([UGGRID],[GRIDDIM == WORLDDIM],[Dune::UGGrid< dimgrid >],[dune/grid/uggrid.hh],[dune/grid/io/file/dgfparser/dgfug.hh])
+
+      AC_DEFINE(HAVE_UG, ENABLE_UG, 
+        [This is only true if UG was found by configure 
+         _and_ if the application uses the UG_CPPFLAGS])
+         
+      # Remove the following as soon as we absolutely require patch10 or higher
+      if test x$HAVE_UG_PATCH10 = x1 ; then
+      
+        AC_DEFINE(HAVE_UG_PATCH10, 1,
+            [Do we have UG in at least version 3.9.1-patch10?])
+            
+      fi
+
+  fi 
+      
+  # tell automake   
+  AM_CONDITIONAL(UG, test x$HAVE_UG = x1)
+  
+  # restore variables
+  LDFLAGS="$ac_save_LDFLAGS"
+  CPPFLAGS="$ac_save_CPPFLAGS"
+  LIBS="$ac_save_LIBS"
+
+  DUNE_ADD_SUMMARY_ENTRY([UG],[$with_ug])
+  
 ])
 
 # $Id$
